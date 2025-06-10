@@ -18,7 +18,13 @@ function mostrarNotificacion({ estado, mensaje, titulo, confirmButtonText }) {
             title: titulo || 'Error',
             text: mensaje || 'Ocurrió un error inesperado',
             confirmButtonText: confirmButtonText || 'Entendido'
-        }
+        },
+        error_password: {
+            icon: 'error',
+            title: titulo || 'Error de contraseña',
+            text: mensaje || 'La contraseña ingresada es incorrecta',
+            confirmButtonText: confirmButtonText || 'Intentar de nuevo'
+        },
         // ... otras configuraciones ...
     };
 

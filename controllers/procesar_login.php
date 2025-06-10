@@ -20,12 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $_SESSION['correo'] = $usuario['correo'];
         $_SESSION['rol'] = $usuario['rol'];
 
-        header("refresh:5;url=../index.php");
+        header("refresh:3;url=../index.php");
 
         exit();
     }
     else {
-        echo "Contraseña incorrecta. Por favor, inténtalo de nuevo.";
-        header("refresh:3;url=../views/login.php");
+        header("refresh:3;url=../views/login.php?estado=error_password");
+        exit();
     }
 }
