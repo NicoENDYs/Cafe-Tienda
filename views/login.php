@@ -6,6 +6,9 @@
     <title>Café & Bebidas El Buen Sabor - Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/login_estilo.css">
+    <!---notificaciones--->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../assets/js/notificaciones.js"></script>
 </head>
 <body>
     <div class="login-container">
@@ -22,15 +25,15 @@
         
         <form method="POST" action="../controllers/procesar_login.php">
             <div class="form-group">
-                <label for="nombre">Usuario:</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Ingresa tu usuario">
+                <label for="correo">Correo:</label>
+                <input type="text" id="correo" name="correo" required placeholder="Ingresa tu correo electrónico">
             </div>
             
             <div class="form-group">
                 <label for="password">Contraseña:</label>
                 <div class="password-container">
                     <input type="password" id="password" name="password" required placeholder="Ingresa tu contraseña">
-                    <span class="toggle-password" onclick="togglePasswordVisibility()">👁️</span>
+                    <span class="toggle-password" onclick="togglePasswordVisibility('password')">👁️</span>
                 </div>
             </div>
             
@@ -38,14 +41,14 @@
             
             <div class="links">
                 <a href="forgot-password.php">¿Olvidaste tu contraseña?</a>
-                <a href="help.php">¿Necesitas ayuda?</a>
             </div>
             
             <div class="divider">o</div>
             
-            <a href="register.php" class="register-btn">Crear una cuenta nueva</a>
+            <a href="../views/registro.php" class="register-btn">Crear una cuenta nueva</a>
         </form>
     </div>
     <script src="../assets/js/esconder_password.js"></script>
+
 </body>
 </html>
