@@ -1,61 +1,31 @@
 <?php
 require_once '../models/MySQL.php';
 
+session_start();
+
 $mysql = new MySQL();
 $mysql->conectar();
 
-// Iniciar sesión
-session_start();
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-// Procesar el formulario cuando se envía
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $correo = trim($_POST['correo']);
+    $correo = $_POST['correo'];
     $password = $_POST['password'];
-    
-    // Validar campos
-    if (empty($correo) || empty($password)) {
-        $_SESSION['error'] = "Por favor, complete todos los campos.";
-        header("Location: ../views/login.php");
+
+    $resultado = $mysql->efectuarConsulta("SELECT * FROM Usuarios WHERE correo = '$correo';");
+    $usuario = $resultado->fetch_assoc();
+
+    if (password_verify($password, $usuario['password'])) {
+
+        $_SESSION['nombre'] = $usuario['nombre'];
+        $_SESSION['correo'] = $usuario['correo'];
+        $_SESSION['rol'] = $usuario['rol'];
+
+        header("refresh:5;url=../index.php");
+
         exit();
     }
-    
-    // Buscar usuario en la base de datos
-    try {
-        $consulta ="SELECT * FROM usuarios WHERE correo = $correo";
-        
-        if ($resultado === 1) {
-            $user = $mysql->efectuarConsulta($resultado);
-            
-            // Verificar contraseña
-            if (password_verify($password, $user['password'])) {
-                // Iniciar sesión
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_nombre'] = $user['nombre'];
-                $_SESSION['user_rol'] = $user['rol'];
-                
-                // Redirigir según el rol
-                if ($user['rol'] === 'admin') {
-                    header("Location: ../views/admin/dashboard.php");
-                } else {
-                    header("Location: ../views/usuario/inicio.php");
-                }
-                exit();
-            } else {
-                $_SESSION['error'] = "Usuario o contraseña incorrectos.";
-            }
-        } else {
-            $_SESSION['error'] = "Usuario o contraseña incorrectos.";
-        }
-    } catch (Exception $e) {
-        $_SESSION['error'] = "Error al procesar la solicitud: " . $e->getMessage();
+    else {
+        echo "Contraseña incorrecta. Por favor, inténtalo de nuevo.";
+        header("refresh:3;url=../views/login.php");
     }
-    
-    // Si hay error, redirigir de vuelta al login
-    header("Location: ../views/login.php");
-    exit();
-} else {
-    // Si no es POST, redirigir al login
-    header("Location: ../views/login.php");
-    exit();
 }
-?>

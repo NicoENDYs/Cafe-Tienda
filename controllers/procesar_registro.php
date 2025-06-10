@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     // Insertar el nuevo usuario en la base de datos
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $mysql->efectuarConsulta("INSERT INTO Usuarios (nombre, correo, contraseña, rol) VALUES ('$nombre', '$correo', '$hashed_password', 'cliente')");
+    $mysql->efectuarConsulta("INSERT INTO Usuarios (nombre, correo, password, rol) VALUES ('$nombre', '$correo', '$hashed_password', 'cliente')");
 
     header("refresh:3;url=../views/login.php?estado=exito");
 }
