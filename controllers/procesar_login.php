@@ -21,11 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Buscar usuario en la base de datos
     try {
-        $stmt = $conn->prepare("SELECT * FROM usuarios WHERE correo = $correo");
+        $consulta ="SELECT * FROM usuarios WHERE correo = $correo";
         
-        
-        if ($stmt->rowCount() === 1) {
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($resultado === 1) {
+            $user = $mysql->efectuarConsulta($resultado);
             
             // Verificar contraseña
             if (password_verify($password, $user['password'])) {
@@ -47,8 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $_SESSION['error'] = "Usuario o contraseña incorrectos.";
         }
-    } catch(PDOException $e) {
-        $_SESSION['error'] = "Error al procesar el login. Por favor, intente nuevamente.";
+    } catch (Exception $e) {
+        $_SESSION['error'] = "Error al procesar la solicitud: " . $e->getMessage();
     }
     
     // Si hay error, redirigir de vuelta al login
