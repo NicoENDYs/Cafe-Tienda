@@ -1,0 +1,260 @@
+  /* OPCIÓN 1: CAFÉ CLÁSICO */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #4a4a4a;
+    background-color: #faf8f5;
+}
+
+.hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://cdn.pixabay.com/photo/2016/11/18/14/05/brick-wall-1834784_1280.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+}
+
+.accent-color {
+    color: #8B4513; /* café rico */
+}
+
+.accent-bg {
+    background-color: #8B4513;
+}
+
+.btn-primary {
+    background-color: #8B4513;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #6B3410;
+    transform: translateY(-2px);
+}
+
+/* Resto del CSS igual... solo cambian los colores principales */
+
+
+/* OPCIÓN 2: VERDE NATURAL */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #4a4a4a;
+    background-color: #f8faf7;
+}
+
+.accent-color {
+    color: #6B8E5A; /* verde café/oliva */
+}
+
+.accent-bg {
+    background-color: #6B8E5A;
+}
+
+.btn-primary {
+    background-color: #6B8E5A;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #5A7549;
+    transform: translateY(-2px);
+}
+
+
+/* OPCIÓN 3: TERRACOTA ELEGANTE */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #4a4a4a;
+    background-color: #fcf9f6;
+}
+
+.accent-color {
+    color: #B8734A; /* terracota suave */
+}
+
+.accent-bg {
+    background-color: #B8734A;
+}
+
+.btn-primary {
+    background-color: #B8734A;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #A5633D;
+    transform: translateY(-2px);
+}
+
+
+/* OPCIÓN 4: CAFÉ MODERNO */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #4a4a4a;
+    background-color: #fdfcfa;
+}
+
+.accent-color {
+    color: #A0522D; /* café anaranjado */
+}
+
+.accent-bg {
+    background-color: #A0522D;
+}
+
+.btn-primary {
+    background-color: #A0522D;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #8B4513;
+    transform: translateY(-2px);
+}
+
+
+/* OPCIÓN 5: DORADO CAFÉ */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #4a4a4a;
+    background-color: #fefcf8;
+}
+
+.accent-color {
+    color: #CD853F; /* café dorado */
+}
+
+.accent-bg {
+    background-color: #CD853F;
+}
+
+.btn-primary {
+    background-color: #CD853F;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #B8734A;
+    transform: translateY(-2px);
+}
+
+/* Para todas las opciones, el resto del CSS se mantiene igual: */
+
+.product-card {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-img {
+    height: 220px;
+    object-fit: cover;
+}
+
+#map {
+    height: 450px;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-input {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.75rem;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--accent-color); /* Usa el color de acento de la opción elegida */
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.2);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.social-icon {
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    color: var(--accent-color);
+}
+
+.nav-link {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 80%;
+}
+
+.section-heading {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: var(--accent-color);
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.success-checkmark {
+    display: none;
+}
