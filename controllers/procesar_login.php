@@ -20,12 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $_SESSION['correo'] = $usuario['correo'];
         $_SESSION['rol'] = $usuario['rol'];
 
-        header("refresh:3;url=../index.php");
+        if ($usuario['rol'] == 'admin') {
+            $_SESSION['admin'] = true;
+            header("Location: ../admin/dashboard.php");
+        } else {
+            $_SESSION['admin'] = false;
+            header("Location: ../index.php");
+        }
 
         exit();
     }
     else {
-        header("refresh:3;url=../views/login.php?estado=error_password");
+        header("Location: ../views/login.php?estado=error_password");
         exit();
     }
 }

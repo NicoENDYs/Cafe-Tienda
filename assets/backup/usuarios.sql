@@ -23,6 +23,10 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+INSERT INTO `usuarios` (`id_usuario`, `nombre`, `correo`, `password`, `rol`, `creado_en`) VALUES
+(2, 'cristian', 'czs@gmail.com', '$2y$10$B7sj5F6cuz/nEt2Kfv/v6OqHLQzfOylbgMqcE40s/JmBhr/7Q/xju', 'cliente', '2025-06-10 16:07:24'),
+(3, 'cristian', 'jkl@gmail.com', '$2y$10$Ct8JCwCY9OMxSxlpUToGieowabyMmvdc6uyYmIl0mZi.yNVbG4/PS', 'cliente', '2025-06-10 16:20:24');
+
 --
 -- Table structure for table `usuarios`
 --
@@ -39,10 +43,6 @@ CREATE TABLE `usuarios` (
 --
 -- Dumping data for table `usuarios`
 --
-
-INSERT INTO `usuarios` (`id_usuario`, `nombre`, `correo`, `password`, `rol`, `creado_en`) VALUES
-(2, 'cristian', 'czs@gmail.com', '$2y$10$B7sj5F6cuz/nEt2Kfv/v6OqHLQzfOylbgMqcE40s/JmBhr/7Q/xju', 'cliente', '2025-06-10 16:07:24'),
-(3, 'cristian', 'jkl@gmail.com', '$2y$10$Ct8JCwCY9OMxSxlpUToGieowabyMmvdc6uyYmIl0mZi.yNVbG4/PS', 'cliente', '2025-06-10 16:20:24');
 
 --
 -- Indexes for dumped tables
