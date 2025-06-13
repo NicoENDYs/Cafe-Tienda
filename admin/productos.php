@@ -30,40 +30,8 @@ $mysql->desconectar();
 
 <body>
     <div class="admin-layout">
-        <!-- SIDEBAR -->
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                <h3><i class="fas fa-store"></i> Mi Tienda</h3>
-                <p>Panel de Administración</p>
-            </div>
-            <ul class="sidebar-nav">
-                <li class="nav-item">
-                    <a href="./dashboard.php" class="nav-link" data-section="dashboard">
-                        <i class="fas fa-tachometer-alt"></i>
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="./productos.php" class="nav-link active" data-section="productos">
-                        <i class="fas fa-box"></i>
-                        Productos
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-section="usuarios">
-                        <i class="fas fa-users"></i>
-                        Usuarios
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-section="reportes">
-                        <i class="fas fa-chart-bar"></i>
-                        Reportes
-                    </a>
-                </li>
-            </ul>
-        </nav>
-
+        <?php include('sidebar.php'); ?> <!-- Incluye el sidebar -->
+        
         <!-- CONTENIDO PRINCIPAL -->
         <main class="main-content">
             <!-- ENCABEZADO -->

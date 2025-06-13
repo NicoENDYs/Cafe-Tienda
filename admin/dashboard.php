@@ -3,27 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Administrativo - Café & Bebidas El Buen Sabor</title>
+    <title>Dashboard Administrativo</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/admin_dashboard.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>☕ Dashboard Administrativo</h1>
-            <p>Café & Bebidas El Buen Sabor - Panel de Control</p>
-            <div class="date-selector">
-                <input type="date" id="startDate" class="date-input" title="Fecha inicio">
-                <input type="date" id="endDate" class="date-input" title="Fecha fin">
-                <button class="refresh-btn" onclick="updateDashboard()">🔄 Actualizar</button>
+     <div class="admin-layout">
+        <?php include('sidebar.php'); ?>
+        
+        <div class="main-content">
+            <div class="header">
+                <h1>☕ Dashboard Administrativo</h1>
+                <p>Café & Bebidas El Buen Sabor - Panel de Control</p>
+                <div class="date-selector">
+                    <input type="date" id="startDate" class="date-input">
+                    <input type="date" id="endDate" class="date-input">
+                    <button class="refresh-btn" onclick="updateDashboard()">🔄 Actualizar</button>
+                </div>
             </div>
-        </div>
 
         <!-- Tarjetas de Estadísticas -->
         <div class="stats-grid">
             <div class="stat-card revenue">
                 <div class="stat-value" id="totalRevenue">$0</div>
-                <div class="stat-label">Ingresos Totales</div>
+                <div class="stat-label">Ingresos Totales</div>  
             </div>
             <div class="stat-card orders">
                 <div class="stat-value" id="totalOrders">0</div>
@@ -73,7 +78,9 @@
                         </tr>
                     </thead>
                     <tbody id="employeeRevenueTable">
-                        <tr><td colspan="4" class="loading">Cargando datos...</td></tr>
+                        <tr>
+                            <td colspan="4" class="loading">Cargando datos...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -91,7 +98,9 @@
                         </tr>
                     </thead>
                     <tbody id="waiterTablesTable">
-                        <tr><td colspan="4" class="loading">Cargando datos...</td></tr>
+                        <tr>
+                            <td colspan="4" class="loading">Cargando datos...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -105,4 +114,5 @@
         });
     </script>
 </body>
+
 </html>
