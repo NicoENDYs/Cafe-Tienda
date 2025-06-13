@@ -9,6 +9,9 @@ FROM `productos`
 JOIN categorias on categorias.id_categoria = productos.id_categoria ";
 $result = $mysql->efectuarConsulta($sql);
 
+$consulta = "SELECT id_categoria , nombre FROM categorias";
+$categorias = $mysql->efectuarConsulta($consulta);
+
 $mysql->desconectar();
 
 
@@ -24,6 +27,9 @@ $mysql->desconectar();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!--Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <!---notificaciones--->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../assets/js/notificaciones.js"></script>
 
     <link rel="stylesheet" href="../assets/css/admin_productos.css">
 </head>
@@ -108,12 +114,23 @@ $mysql->desconectar();
                                                 <input type="number" name="stock" placeholder="Cantidad en stock" min="0" required />
                                             </div>
 
-                                            <div class="form-group">
-                                                <input type="number" name="id_categoria" placeholder="ID de Categoría" min="1" required />
-                                            </div>
+                                            <!-- Para el select (ya está bien en tu código) -->
+                                            <select name="id_categoria" required>
+                                                <option value="">Seleccione una categoría</option>
+                                                <?php while($fila = $categorias->fetch_assoc()): ?>
+                                                    <option value="<?php echo $fila['id_categoria']; ?>">
+                                                        <?php echo $fila['nombre']; ?>
+                                                    </option>
+                                                <?php endwhile; ?>
+                                            </select>
 
-                                            <div class="form-group">
-                                                <input type="url" name="imagen_url" placeholder="URL de la imagen (opcional)" />
+                                            <!-- Para el input file (modificado) -->
+                                            <div class="form-group file-input">
+                                                <input type="file" name="imagen_url" id="fileInput" placeholder="URL de la imagen (opcional)" />
+                                                <label for="fileInput">
+                                                    <span id="fileName">Seleccionar archivo</span>
+                                                </label>
+                                                <span class="file-name" id="fileSelectedName">Sin archivos seleccionados</span>
                                             </div>
                                             
 
