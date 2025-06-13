@@ -1,19 +1,16 @@
-  /* OPCIÓN 1: CAFÉ CLÁSICO */
-body {
+ 
+ 
+
+ /* OPCIÓN 1: CAFÉ CLÁSICO */
+/* body {
     font-family: 'Poppins', sans-serif;
     color: #4a4a4a;
     background-color: #faf8f5;
 }
 
-.hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://cdn.pixabay.com/photo/2016/11/18/14/05/brick-wall-1834784_1280.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 70vh;
-}
 
 .accent-color {
-    color: #8B4513; /* café rico */
+    color: #8B4513;
 }
 
 .accent-bg {
@@ -29,20 +26,20 @@ body {
 .btn-primary:hover {
     background-color: #6B3410;
     transform: translateY(-2px);
-}
+} */
 
 /* Resto del CSS igual... solo cambian los colores principales */
 
 
 /* OPCIÓN 2: VERDE NATURAL */
-body {
+/* body {
     font-family: 'Poppins', sans-serif;
     color: #4a4a4a;
     background-color: #f8faf7;
 }
 
 .accent-color {
-    color: #6B8E5A; /* verde café/oliva */
+    color: #6B8E5A; 
 }
 
 .accent-bg {
@@ -58,18 +55,18 @@ body {
 .btn-primary:hover {
     background-color: #5A7549;
     transform: translateY(-2px);
-}
+} */
 
 
 /* OPCIÓN 3: TERRACOTA ELEGANTE */
-body {
+/* body {
     font-family: 'Poppins', sans-serif;
     color: #4a4a4a;
     background-color: #fcf9f6;
 }
 
 .accent-color {
-    color: #B8734A; /* terracota suave */
+    color: #B8734A; 
 }
 
 .accent-bg {
@@ -85,18 +82,18 @@ body {
 .btn-primary:hover {
     background-color: #A5633D;
     transform: translateY(-2px);
-}
+} */
 
 
 /* OPCIÓN 4: CAFÉ MODERNO */
-body {
+/* body {
     font-family: 'Poppins', sans-serif;
     color: #4a4a4a;
     background-color: #fdfcfa;
 }
 
 .accent-color {
-    color: #A0522D; /* café anaranjado */
+    color: #A0522D; 
 }
 
 .accent-bg {
@@ -112,10 +109,18 @@ body {
 .btn-primary:hover {
     background-color: #8B4513;
     transform: translateY(-2px);
-}
+} */
 
 
 /* OPCIÓN 5: DORADO CAFÉ */
+
+.hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://cdn.pixabay.com/photo/2016/11/18/14/05/brick-wall-1834784_1280.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     color: #4a4a4a;

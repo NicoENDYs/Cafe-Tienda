@@ -1,3 +1,32 @@
+<?php
+require_once __DIR__ . '/models/MySql.php';
+
+$mysql = new Mysql;
+$mysql->conectar();
+
+
+$query = "SELECT productos.id_producto, productos.nombre, productos.imagen_url, productos.precio, productos.descripcion, productos.stock, categorias.nombre AS categoria_nombre
+        FROM productos 
+        JOIN categorias ON productos.id_categoria = categorias.id_categoria;";
+$resultado = $mysql->efectuarConsulta($query);
+
+$products = [];
+while ($row = mysqli_fetch_assoc($resultado)) {
+    $products[] = [
+        'id' => $row['id_producto'],
+        'name' => $row['nombre'],
+        'category' => $row['categoria_nombre'], // ahora es el nombre
+        'image' => $row['imagen_url'],
+        'price' => $row['precio'],
+        'short_description' => $row['descripcion'],
+        'stock' => $row['stock'],
+    ];
+}
+
+$mysql->desconectar();
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -65,65 +94,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Product 1 -->
-                <div class="product-card bg-white" data-aos="fade-up">
-                    <img src="https://cdn.pixabay.com/photo/2017/08/07/22/57/coffee-2608864_1280.jpg" alt="Cafés" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Cafés</h3>
-                        <p class="text-gray-600">Nuestras especialidades de café preparadas con granos seleccionados de las mejores regiones.</p>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://cdn.pixabay.com/photo/2019/09/28/22/02/ice-4511545_1280.jpg" alt="Cholados" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Cholados</h3>
-                        <p class="text-gray-600">Refrescantes cholados con frutas frescas, salsas caseras y hielo raspado.</p>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="200">
-                    <img src="https://cdn.pixabay.com/photo/2018/05/01/18/21/eclair-3366430_1280.jpg" alt="Postres" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Postres</h3>
-                        <p class="text-gray-600">Deliciosos postres artesanales para complementar tu bebida favorita.</p>
-                    </div>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://cdn.pixabay.com/photo/2021/01/03/03/43/snow-cone-5883721_1280.jpg" alt="Raspados" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Raspados</h3>
-                        <p class="text-gray-600">Refrescantes raspados con sabores naturales y toppings a elección.</p>
-                    </div>
-                </div>
-
-                <!-- Product 5 -->
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="200">
-                    <img src="https://cdn.pixabay.com/photo/2018/02/25/11/09/avocado-3180635_1280.jpg" alt="Sándwiches" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Sándwiches</h3>
-                        <p class="text-gray-600">Deliciosos sándwiches preparados con ingredientes frescos y pan artesanal.</p>
-                    </div>
-                </div>
-
-                <!-- Product 6 -->
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="300">
-                    <img src="https://cdn.pixabay.com/photo/2019/11/09/17/02/burger-4614022_1280.jpg" alt="Hamburguesas" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Hamburguesas</h3>
-                        <p class="text-gray-600">Sabrosas hamburguesas gourmet con ingredientes seleccionados.</p>
-                    </div>
-                </div>
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="300">
-                    <img src="https://cdn.pixabay.com/photo/2019/11/09/17/02/burger-4614022_1280.jpg" alt="Hamburguesas" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Hamburguesas</h3>
-                        <p class="text-gray-600">Sabrosas hamburguesas gourmet con ingredientes seleccionados.</p>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </section>
@@ -211,7 +182,7 @@
             </div>
         </div>
     </footer>
-
+    <script src="./assets/js/productos.js"></script>
     <script src="./assets/js/index.js"></script>
 </body>
 
