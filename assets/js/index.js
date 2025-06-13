@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Initialize map
-    const map = L.map("map").setView([4.6097, -74.0817], 15); // Default to Bogotá, Colombia coordinates
+    const map = L.map("map").setView([4.751686, -75.920263], 20); // Default to Bogotá, Colombia coordinates
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }).addTo(map);
 
     // Add marker
-    const marker = L.marker([4.751626, -75.9198867]).addTo(map);
+    const marker = L.marker([4.751686, -75.920263]).addTo(map);
     marker
         .bindPopup("<b>Café Artesanal</b><br>Calle Principal #123, Centro")
         .openPopup();

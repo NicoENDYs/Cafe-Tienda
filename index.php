@@ -1,3 +1,22 @@
+<?php
+require_once 'models/MySQL.php';
+
+
+$mysql = new MySQL();
+$mysql->conectar();
+// Ahora puedes usar $mysql->getConexion() para obtener el objeto mysqli
+
+$resultado = $mysql->efectuarConsulta("SELECT productos.id_producto,productos.nombre,productos.descripcion,productos.precio,productos.stock,categorias.nombre as nombre_categoria,productos.imagen_url 
+FROM `productos` 
+JOIN categorias on categorias.id_categoria = productos.id_categoria 
+");
+
+
+$mysql->desconectar();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -64,66 +83,26 @@
             <h2 class="text-3xl font-bold mb-12 section-heading" data-aos="fade-up">Nuestros Productos</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Product 1 -->
-                <div class="product-card bg-white" data-aos="fade-up">
-                    <img src="https://cdn.pixabay.com/photo/2017/08/07/22/57/coffee-2608864_1280.jpg" alt="Cafés" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Cafés</h3>
-                        <p class="text-gray-600">Nuestras especialidades de café preparadas con granos seleccionados de las mejores regiones.</p>
-                    </div>
-                </div>
 
-                <!-- Product 2 -->
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://cdn.pixabay.com/photo/2019/09/28/22/02/ice-4511545_1280.jpg" alt="Cholados" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Cholados</h3>
-                        <p class="text-gray-600">Refrescantes cholados con frutas frescas, salsas caseras y hielo raspado.</p>
-                    </div>
-                </div>
 
-                <!-- Product 3 -->
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="200">
-                    <img src="https://cdn.pixabay.com/photo/2018/05/01/18/21/eclair-3366430_1280.jpg" alt="Postres" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Postres</h3>
-                        <p class="text-gray-600">Deliciosos postres artesanales para complementar tu bebida favorita.</p>
-                    </div>
-                </div>
+                <?php if (mysqli_num_rows($resultado) > 0): ?>
+                    <!-- Producto 1 -->
 
-                <!-- Product 4 -->
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://cdn.pixabay.com/photo/2021/01/03/03/43/snow-cone-5883721_1280.jpg" alt="Raspados" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Raspados</h3>
-                        <p class="text-gray-600">Refrescantes raspados con sabores naturales y toppings a elección.</p>
-                    </div>
-                </div>
+                    <?php while ($producto = mysqli_fetch_assoc($resultado)): ?>
+                        <!-- Product 1 -->
+                        <div class="product-card bg-white" data-aos="fade-up">
+                            <img src="  <?php echo $producto['imagen_url']; ?>" alt="Cafés" class="product-img w-full">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2 accent-color"><?php echo $producto['nombre']; ?></h3>
+                                <p class="text-gray-600"><?php echo $producto['descripcion']; ?></p>
+                            </div>
+                        </div>
 
-                <!-- Product 5 -->
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="200">
-                    <img src="https://cdn.pixabay.com/photo/2018/02/25/11/09/avocado-3180635_1280.jpg" alt="Sándwiches" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Sándwiches</h3>
-                        <p class="text-gray-600">Deliciosos sándwiches preparados con ingredientes frescos y pan artesanal.</p>
-                    </div>
-                </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p class="text-center mt-5 text-black">No hay Productos.</p>
+                <?php endif; ?>
 
-                <!-- Product 6 -->
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="300">
-                    <img src="https://cdn.pixabay.com/photo/2019/11/09/17/02/burger-4614022_1280.jpg" alt="Hamburguesas" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Hamburguesas</h3>
-                        <p class="text-gray-600">Sabrosas hamburguesas gourmet con ingredientes seleccionados.</p>
-                    </div>
-                </div>
-                <div class="product-card bg-white" data-aos="fade-up" data-aos-delay="300">
-                    <img src="https://cdn.pixabay.com/photo/2019/11/09/17/02/burger-4614022_1280.jpg" alt="Hamburguesas" class="product-img w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 accent-color">Hamburguesas</h3>
-                        <p class="text-gray-600">Sabrosas hamburguesas gourmet con ingredientes seleccionados.</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
