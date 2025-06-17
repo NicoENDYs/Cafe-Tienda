@@ -39,7 +39,9 @@ $mysql->desconectar();
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <!-- Custom Styles -->
+    <link rel="stylesheet" href="./assets/css/card_estilo.css">
     <link rel="stylesheet" href="./assets/css/index_estilo.css">
+
 
 </head>
 
@@ -90,11 +92,31 @@ $mysql->desconectar();
 
                     <?php while ($producto = mysqli_fetch_assoc($resultado)): ?>
                         <!-- Product 1 -->
-                        <div class="product-card bg-white" data-aos="fade-up">
-                            <img src="  <?php echo $producto['imagen_url']; ?>" alt="Cafés" class="product-img w-full">
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold mb-2 accent-color"><?php echo $producto['nombre']; ?></h3>
-                                <p class="text-gray-600"><?php echo $producto['descripcion']; ?></p>
+                        <div class="card-container">
+                            <div class="card">
+                                <!-- Frente de la tarjeta -->
+                                <div class="card-front">
+                                    <img src="<?php echo $producto['imagen_url']; ?>" alt="Producto">
+                                    <h3><?php echo $producto['nombre']; ?></h3>
+                                </div>
+
+                                <!-- Reverso de la tarjeta -->
+                                <div class="card-back">
+                                    <div class="row">
+                                        <img src="<?php echo $producto['imagen_url']; ?>" alt="Producto">
+                                        <h4 id="descripcion-titulo">Descripción</h4>
+                                        <p><?php echo $producto['descripcion']; ?></p>
+                                        <br>
+                                        <h4 id="descripcion-titulo">Categoría</h4>
+                                        <p><?php echo $producto['nombre_categoria']; ?></p>
+                                        <br>
+                                        <h4 id="descripcion-titulo">Stock</h4>
+                                        <p><?php echo $producto['stock']; ?></p>
+                                        <br>
+                                        <h4 id="descripcion-titulo">Precio</h4>
+                                        <p>$<?php echo $producto['precio']; ?></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
