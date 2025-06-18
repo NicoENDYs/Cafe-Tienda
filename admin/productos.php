@@ -296,41 +296,5 @@ $mysql->desconectar();
 
     <script src="../assets/js/admin_productos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-    
-    <script>
-        // Script para mostrar el nombre del archivo seleccionado en los modales de edición
-        document.addEventListener('DOMContentLoaded', function() {
-            <?php 
-            $mysql->conectar();
-            $result_edit = $mysql->efectuarConsulta($sql);
-            while ($producto = mysqli_fetch_assoc($result_edit)): 
-            ?>
-                document.getElementById('edit_fileInput<?php echo $producto['id_producto']; ?>').addEventListener('change', function(e) {
-                    const fileName = e.target.files[0] ? e.target.files[0].name : 'Sin archivos seleccionados';
-                    document.getElementById('edit_fileSelectedName<?php echo $producto['id_producto']; ?>').textContent = fileName;
-                });
-            <?php endwhile; 
-            $mysql->desconectar();
-            ?>
-        });
-
-        // Función para eliminar producto con confirmación
-        function deleteProduct(id) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡No podrás revertir esto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '../controllers/EliminarProducto.php?id=' + id;
-                }
-            });
-        }
-    </script>
 </body>
 </html>
