@@ -49,9 +49,10 @@ $mysql->desconectar();
     <!-- Header and Navigation -->
     <header class="hero flex flex-col justify-center items-center relative">
         <div class="absolute inset-0 z-10 flex flex-col justify-between">
+            <img src="./assets/image/Cafe fondo.jpg" alt="Fondo">
             <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center">
-                    <span class="text-white text-3xl font-bold">Café<span class="accent-color">Artesanal</span></span>
+                    <span class="text-white text-3xl">Café<span class="accent-color">Artesanal</span></span>
                 </div>
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="#productos" class="nav-link">Productos</a>
@@ -103,7 +104,6 @@ $mysql->desconectar();
                                 <!-- Reverso de la tarjeta -->
                                 <div class="card-back">
                                     <div class="row">
-                                        <img src="<?php echo $producto['imagen_url']; ?>" alt="Producto">
                                         <h4 id="descripcion-titulo">Descripción</h4>
                                         <p><?php echo $producto['descripcion']; ?></p>
                                         <br>
@@ -115,6 +115,7 @@ $mysql->desconectar();
                                         <br>
                                         <h4 id="descripcion-titulo">Precio</h4>
                                         <p>$<?php echo $producto['precio']; ?></p>
+                                        <img src="<?php echo $producto['imagen_url']; ?>" alt="Producto">
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +133,7 @@ $mysql->desconectar();
     <!-- Location Section -->
     <section id="ubicacion" class="py-20 bg-gray-50">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold mb-12 section-heading" data-aos="fade-up">Nos Ubicamos</h2>
+            <h2 class="text-3xl font-bold mb-12 section-heading" data-aos="fade-up">Nos <span class="accent-color">Ubicamos</span></h2>
 
             <div class="flex flex-col md:flex-row gap-10">
                 <div class="md:w-1/2" data-aos="fade-right">
@@ -179,13 +180,13 @@ $mysql->desconectar();
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <div>
-                    <h3 class="text-2xl font-bold mb-4">Café<span class="accent-color">Artesanal</span></h3>
+                    <h3 class="text-2xl mb-4">Café<span class="accent-color">Artesanal</span></h3>
                     <p class="text-gray-400 mb-6">Tu lugar para disfrutar de los mejores productos artesanales en un ambiente acogedor.</p>
                     <div class="flex space-x-4">
-                        <a href="javascript:void(0)" class="social-icon"><i class="fab fa-facebook-f text-xl"></i></a>
-                        <a href="javascript:void(0)" class="social-icon"><i class="fab fa-instagram text-xl"></i></a>
-                        <a href="javascript:void(0)" class="social-icon"><i class="fab fa-twitter text-xl"></i></a>
-                        <a href="javascript:void(0)" class="social-icon"><i class="fab fa-whatsapp text-xl"></i></a>
+                        <a href="javascript:void(0)" class="social-icon accent-color"><i class="fab fa-facebook-f text-xl"></i></a>
+                        <a href="javascript:void(0)" class="social-icon accent-color"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="javascript:void(0)" class="social-icon accent-color"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="javascript:void(0)" class="social-icon accent-color"><i class="fab fa-whatsapp text-xl"></i></a>
                     </div>
                 </div>
 
@@ -201,8 +202,8 @@ $mysql->desconectar();
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Horario</h4>
                     <div class="space-y-3">
-                        <p>Lunes a Viernes: 7:00 AM - 8:00 PM</p>
-                        <p>Sábados y Domingos: 8:00 AM - 9:00 PM</p>
+                        <p>Lunes a Viernes: <span class="accent-color">7:00 AM - 8:00 PM</span></p>
+                        <p>Sábados y Domingos: <span class="accent-color">8:00 AM - 9:00 PM</span></p>
                     </div>
                 </div>
             </div>
