@@ -24,10 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($usuario['rol'] === 'admin') {
                 $_SESSION['admin'] = true;
-                header("Location: ../admin/dashboard.php");
-            } else {
-                $_SESSION['admin'] = false;
-                header("Location: ../index.php");
+                header("Location: ../admin/dashboard.php?estado=exito");
+            } 
+            if ($usuario['rol'] === 'mesero') {
+                $_SESSION['mesero'] = true;
+                header("Location: ../mesero/dashboard.php?estado=exito");
             }
 
             exit();

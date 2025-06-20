@@ -16,8 +16,8 @@ try {
             productos.stock,
             categorias.nombre AS nombre_categoria,
             productos.imagen_url
-        FROM productos
-        JOIN categorias ON categorias.id_categoria = productos.id_categoria
+        FROM productos 
+        JOIN categorias ON categorias.id_categoria = productos.id_categoria where estado < '1'
     ");
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -142,7 +142,7 @@ $mysql->desconectar();
                                     <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditar<?php echo $producto['id_producto']; ?>">
                                         <i class="fas fa-edit"></i> Editar
                                     </button>
-                                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(<?php echo $producto['id_producto']; ?>)">
+                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarEliminar<?php echo $producto['id_producto']; ?>">
                                         <i class="fas fa-trash"></i> Eliminar
                                     </button>
                                 </td>
@@ -153,6 +153,25 @@ $mysql->desconectar();
                 <?php else: ?>
                     <p class="text-center mt-5 text-black">No hay productos registrados.</p>
                 <?php endif; ?>
+
+                <?php foreach ($result as $producto): ?>
+                <div class="modal fade" id="confirmarEliminar<?php echo $producto['id_producto']; ?>" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body p-3 text-center small">
+                                ¿Eliminar <strong><?php echo htmlspecialchars($producto['nombre']); ?></strong>?
+                            </div>
+                            <div class="modal-footer p-2 justify-content-center">
+                                <button type="button" class="btn btn-sm btn-outline-secondary px-3" data-bs-dismiss="modal">Cancelar</button>
+                                <form action="../controllers/eliminar_producto.php" method="POST" class="d-inline m-0">
+                                    <input type="hidden" name="id_producto" value="<?php echo $producto['id_producto']; ?>">
+                                    <button type="submit" class="btn btn-sm btn-danger px-3">Eliminar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
 
                 <!--modal de edicion-->
                 <?php foreach ($result as $producto): ?>
