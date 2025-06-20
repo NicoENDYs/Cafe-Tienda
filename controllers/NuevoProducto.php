@@ -4,45 +4,72 @@ require_once '../models/MySQL.php';
 $mysql = new MySQL();
 $mysql->conectar();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtener datos del formulario
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
     $precio = $_POST['precio'];
     $stock = $_POST['stock'];
     $categoria = $_POST['id_categoria'];
 
-    if ($_FILES['imagen_url']['error'] === UPLOAD_ERR_OK) {
+    $ruta_imagen = null;
+
+    // Manejo de imagen subida
+    if (isset($_FILES['imagen_url']) && $_FILES['imagen_url']['error'] === UPLOAD_ERR_OK) {
         $permitidos = ['image/jpeg' => '.jpg', 'image/png' => '.png'];
         $tipo = mime_content_type($_FILES['imagen_url']['tmp_name']);
-    
+
         if (!array_key_exists($tipo, $permitidos)) {
-            die("Solo se permiten imágenes JPG y PNG.");
+            header("Location: ../admin/nuevo_producto.php?estado=error&mensaje=Tipo de imagen no permitido");
+            exit();
         }
-    
-        // Generar nombre único y guardar la imagen
+
+        // Nombre único para la imagen
         $ext = $permitidos[$tipo];
         $nombreUnico = 'imagen_' . date('Ymd_Hisv') . $ext;
-        $ruta = 'assets/image/' . $nombreUnico;
-        $rutaAbsoluta = __DIR__ . '/../' . $ruta;
-        
+        $ruta_imagen = 'assets/image/' . $nombreUnico;
+        $rutaAbsoluta = __DIR__ . '/../' . $ruta_imagen;
+
+        // Mover imagen
         if (!move_uploaded_file($_FILES['imagen_url']['tmp_name'], $rutaAbsoluta)) {
-            die("Error al subir la imagen.");
+            header("Location: ../admin/nuevo_producto.php?estado=error&mensaje=Error al subir la imagen");
+            exit();
         }
-    } else {
-        die("Debe seleccionar una imagen.");
     }
 
-    // Insertar el nuevo producto en la base de datos
-    $resultado = $mysql->efectuarConsulta("INSERT INTO Productos (nombre, descripcion, precio, stock, id_categoria, imagen_url) VALUES ('$nombre', '$descripcion', '$precio', '$stock', '$categoria', '../$ruta');");
-
-    if ($resultado) {
-        header("Location: ../admin/productos.php?estado=exito");
-    } else {
-        header("Location: ../admin/nuevo_producto.php?estado=error");
+    // Validación de campos obligatorios
+    if (empty($nombre) || empty($descripcion) || empty($precio) || empty($stock)) {
+        header("Location: ../admin/nuevo_producto.php?estado=error&mensaje=Todos los campos son obligatorios");
+        exit();
     }
-    
-} else {
-    header("Location: ../admin/nuevo_producto.php?estado=error");
 
+    try {
+        // Consulta preparada usando tu clase PDO
+        $stmt = $mysql->prepare("
+            INSERT INTO productos (nombre, descripcion, precio, stock, id_categoria, imagen_url)
+            VALUES (:nombre, :descripcion, :precio, :stock, :id_categoria, :imagen_url)
+        ");
+
+        $resultado = $stmt->execute([
+            ':nombre' => $nombre,
+            ':descripcion' => $descripcion,
+            ':precio' => $precio,
+            ':stock' => $stock,
+            ':id_categoria' => $categoria,
+            ':imagen_url' => $ruta_imagen
+        ]);
+
+        if ($resultado) {
+            header("Location: ../admin/productos.php?estado=exito");
+        } else {
+            header("Location: ../admin/nuevo_producto.php?estado=error&mensaje=No se pudo insertar el producto");
+        }
+
+    } catch (PDOException $e) {
+        error_log("Error al insertar producto: " . $e->getMessage());
+        header("Location: ../admin/nuevo_producto.php?estado=error&mensaje=Error interno");
+    }
+
+    $mysql->desconectar();
 }
+?>
