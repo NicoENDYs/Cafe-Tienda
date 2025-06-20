@@ -750,3 +750,30 @@ select:hover {
         grid-template-columns: 1fr;
     }
 }
+
+/* Estilos específicos para modales de edición */
+.modal fade {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Mismo espaciado que el modal de agregar */
+}
+
+/* Espaciado adicional para la imagen actual */
+.current-image-container {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px dashed var(--gray-300);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.current-image-container small {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--gray-700);
+}
+
+/* Asegurar consistencia en los grupos de formulario */
+.modal .form-group {
+    margin-bottom: 20px;
+}
