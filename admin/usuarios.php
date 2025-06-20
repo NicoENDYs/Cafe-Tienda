@@ -90,9 +90,7 @@ $mysql->desconectar();
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoUsuarioModal">
                         <i class="fas fa-plus"></i> Añadir Usuario
                     </button>
-                </div>
-
-                <!-- Modal para nuevo usuario -->
+                    <!-- Modal para nuevo usuario -->
                <div class="modal fade user-modal" id="nuevoUsuarioModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -122,6 +120,7 @@ $mysql->desconectar();
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
 
                 <div class="table-container">
