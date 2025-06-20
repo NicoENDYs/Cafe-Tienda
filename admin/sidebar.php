@@ -17,7 +17,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" data-section="usuarios">
+                    <a href="./usuarios.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'usuarios.php' ? 'active' : '' ?>" data-section="usuarios">
                         <i class="fas fa-users"></i>
                         Usuarios
                     </a>
@@ -26,6 +26,18 @@
                     <a href="#" class="nav-link" data-section="reportes">
                         <i class="fas fa-chart-bar"></i>
                         Reportes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="configuracion">
+                        <i class="fas fa-cog"></i>
+                        Configuración
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Cerrar Sesión
                     </a>
                 </li>
             </ul>

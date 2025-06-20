@@ -1,5 +1,5 @@
 <?php
-require_once 'models/MySQL.php';
+require_once('models/MySQL.php');
 
 $mysql = new MySQL();
 $mysql->conectar();
@@ -9,7 +9,7 @@ $pdo = $mysql->getConexion(); // Obtiene la conexión PDO
 $consulta = "SELECT productos.id_producto, productos.nombre, productos.descripcion, productos.precio, productos.stock, 
             categorias.nombre AS nombre_categoria, productos.imagen_url 
             FROM productos 
-            JOIN categorias ON categorias.id_categoria = productos.id_categoria";
+            JOIN categorias ON categorias.id_categoria = productos.id_categoria where estado < '1'";
 
 try {
     $stmt = $pdo->prepare($consulta);
@@ -102,7 +102,7 @@ $mysql->desconectar();
                             <div class="card">
                                 <!-- Frente de la tarjeta -->
                                 <div class="card-front">
-                                    <img src="<?php echo htmlspecialchars($producto['imagen_url']); ?>" alt="Producto">
+                                    <img src="<?php echo $producto['imagen_url']; ?>" alt="<?php echo $producto['nombre']; ?>" class="product-img">
                                     <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
                                 </div>
 
@@ -120,7 +120,7 @@ $mysql->desconectar();
                                         <br>
                                         <h4 id="descripcion-titulo">Precio</h4>
                                         <p>$<?php echo htmlspecialchars($producto['precio']); ?></p>
-                                        <img src="<?php echo $producto['imagen_url']; ?>" alt="Producto">
+                                        <img src="<?php echo $producto['imagen_url']; ?>" alt="<?php echo $producto['nombre']; ?>" class="product-img">
                                     </div>
                                 </div>
                             </div>
