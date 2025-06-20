@@ -89,9 +89,9 @@ $mysql->desconectar();
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <!-- Botón cerrar para móvil -->
-        <button class="sidebar-close" id="sidebarClose">
+        <!-- <button class="sidebar-close" id="sidebarClose">
             <i class="fas fa-times"></i>
-        </button>
+        </button> -->
         <h3><i class="fas fa-store"></i> Mi Tienda</h3>
         <p>Panel Administrativo</p>
     </div>
