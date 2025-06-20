@@ -3,36 +3,41 @@ require_once('../models/MySQL.php');
 
 $mysql = new MySQL();
 $mysql->conectar();
-
-$consulta = "Select SUM(total)as total from ventas;";
-$resultado_ventas = $mysql->efectuarConsulta($consulta);
-$ventas = $resultado_ventas->fetch_assoc();
+//ingresos
+$consulta = "SELECT SUM(total) AS total FROM ventas;";
+$stmt = $mysql->prepare($consulta);
+$stmt->execute();
+$ventas = $stmt->fetch(PDO::FETCH_ASSOC);
 $total_ventas = $ventas['total'] ?? 0;
 
 //VENTAS MES
 $consulta_ventas_mes = "
     SELECT 
-        DATE_FORMAT(fecha_venta, '%b') as month,
-        SUM(total) as revenue
+        DATE_FORMAT(fecha_venta, '%b') AS month,
+        SUM(total) AS revenue
     FROM ventas 
     WHERE fecha_venta >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
     GROUP BY DATE_FORMAT(fecha_venta, '%Y-%m'), DATE_FORMAT(fecha_venta, '%b')
     ORDER BY DATE_FORMAT(fecha_venta, '%Y-%m')
 ";
-$resultado_ventas_mes = $mysql->efectuarConsulta($consulta_ventas_mes);
+
+$stmt = $mysql->prepare($consulta_ventas_mes);
+$stmt->execute();
 $ventas_por_mes = [];
-while ($fila = $resultado_ventas_mes->fetch_assoc()) {
+
+while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $ventas_por_mes[] = [
         'month' => $fila['month'],
         'revenue' => (float)$fila['revenue']
     ];
 }
+
 //TOP PRODUCTOS
 $consulta_top_products = "
     SELECT 
-        p.nombre as name,
-        SUM(dv.cantidad) as sales,
-        SUM(dv.subtotal) as revenue
+        p.nombre AS name,
+        SUM(dv.cantidad) AS sales,
+        SUM(dv.subtotal) AS revenue
     FROM detalle_ventas dv
     INNER JOIN productos p ON dv.id_producto = p.id_producto
     GROUP BY dv.id_producto, p.nombre
@@ -40,17 +45,18 @@ $consulta_top_products = "
     LIMIT 8
 ";
 
-$resultado_top_products = $mysql->efectuarConsulta($consulta_top_products);
-
-// Convertir resultado en array
+$stmt = $mysql->prepare($consulta_top_products);
+$stmt->execute();
 $topProducts = [];
-while ($fila = $resultado_top_products->fetch_assoc()) {
+
+while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $topProducts[] = [
         'name' => $fila['name'],
         'sales' => (int)$fila['sales'],
         'revenue' => (float)$fila['revenue']
     ];
 }
+
 
 
 $mysql->desconectar();
