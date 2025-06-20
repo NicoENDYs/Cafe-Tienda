@@ -62,7 +62,7 @@ $mysql->desconectar();
                         <p>Usuarios totales</p>
                     </div>
                 </div>
-                
+
                 <div class="stat-card">
                     <div class="stat-icon bg-success">
                         <i class="fas fa-user-shield"></i>
@@ -72,7 +72,7 @@ $mysql->desconectar();
                         <p>Administradores</p>
                     </div>
                 </div>
-                
+
                 <div class="stat-card">
                     <div class="stat-icon bg-info">
                         <i class="fas fa-user"></i>
@@ -91,36 +91,36 @@ $mysql->desconectar();
                         <i class="fas fa-plus"></i> Añadir Usuario
                     </button>
                     <!-- Modal para nuevo usuario -->
-               <div class="modal fade user-modal" id="nuevoUsuarioModal" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="form-container">
-                                    <h2>Nuevo Usuario</h2>
-                                    <form id="usuarioForm" class="user-form" action="../controllers/NuevoUsuario.php" method="POST" novalidate>
-                                        <div class="form-group">
-                                            <input type="text" name="nombre" placeholder="Nombre completo" required />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="email" name="correo" placeholder="Correo electrónico" required />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="password" placeholder="Contraseña" required />
-                                        </div>
-                                        <div class="form-group">
-                                            <select name="rol" required>
-                                                <option value="">Seleccione un rol</option>
-                                                <option value="admin">Administrador</option>
-                                                <option value="cliente">Cliente</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit">Guardar Usuario</button>
-                                    </form>
+                    <div class="modal fade user-modal" id="nuevoUsuarioModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="form-container">
+                                        <h2>Nuevo Usuario</h2>
+                                        <form id="usuarioForm" class="user-form" action="../controllers/NuevoUsuario.php" method="POST" novalidate>
+                                            <div class="form-group">
+                                                <input type="text" name="nombre" placeholder="Nombre completo" required />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="email" name="correo" placeholder="Correo electrónico" required />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" name="password" placeholder="Contraseña" required />
+                                            </div>
+                                            <div class="form-group">
+                                                <select name="rol" required>
+                                                    <option value="">Seleccione un rol</option>
+                                                    <option value="admin">Administrador</option>
+                                                    <option value="cliente">Cliente</option>
+                                                </select>
+                                            </div>
+                                            <button type="submit">Guardar Usuario</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
 
                 <div class="table-container">
@@ -152,7 +152,8 @@ $mysql->desconectar();
                                             <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal<?php echo $usuario['id_usuario']; ?>">
                                                 <i class="fas fa-edit"></i> Editar
                                             </button>
-                                            <button class="btn btn-sm btn-danger" onclick="confirmarEliminar(<?php echo $usuario['id_usuario']; ?>)">
+                                            <button onclick="confirmarEliminarUsuario(<?php echo $usuario['id_usuario']; ?>)"
+                                                class="btn btn-sm btn-danger">
                                                 <i class="fas fa-trash"></i> Eliminar
                                             </button>
                                         </td>
@@ -167,26 +168,26 @@ $mysql->desconectar();
                                                         <h2>Editar Usuario</h2>
                                                         <form action="../controllers/EditarUsuario.php" method="POST">
                                                             <input type="hidden" name="id_usuario" value="<?php echo $usuario['id_usuario']; ?>">
-                                                            
+
                                                             <div class="form-group">
                                                                 <input type="text" name="nombre" value="<?php echo htmlspecialchars($usuario['nombre']); ?>" placeholder="Nombre" required>
                                                             </div>
-                                                            
+
                                                             <div class="form-group">
                                                                 <input type="email" name="correo" value="<?php echo htmlspecialchars($usuario['correo']); ?>" placeholder="Correo" required>
                                                             </div>
-                                                            
+
                                                             <div class="form-group">
                                                                 <input type="password" name="password" placeholder="Nueva contraseña (dejar en blanco para no cambiar)">
                                                             </div>
-                                                            
+
                                                             <div class="form-group">
                                                                 <select name="rol" required>
                                                                     <option value="admin" <?php echo $usuario['rol'] === 'admin' ? 'selected' : ''; ?>>Administrador</option>
                                                                     <option value="cliente" <?php echo $usuario['rol'] === 'cliente' ? 'selected' : ''; ?>>Cliente</option>
                                                                 </select>
                                                             </div>
-                                                            
+
                                                             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                                                         </form>
                                                     </div>
@@ -204,25 +205,8 @@ $mysql->desconectar();
             </div>
         </main>
     </div>
-
+    <script src="../assets/js/admin_usuarios.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function confirmarEliminar(idUsuario) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡No podrás revertir esto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = `../controllers/EliminarUsuario.php?id=${idUsuario}`;
-                }
-            });
-        }
-    </script>
 </body>
+
 </html>
