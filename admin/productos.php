@@ -155,8 +155,6 @@ $mysql->desconectar();
                     <p class="text-center mt-5 text-black">No hay productos registrados.</p>
                 <?php endif; ?>
 
-                
-
                 <!--modal de edicion-->
                 <?php foreach ($result as $producto): ?>
                 <div class="modal fade" id="modalEditar<?php echo $producto['id_producto']; ?>" tabindex="-1" aria-labelledby="editModalLabel<?php echo $producto['id_producto']; ?>" aria-hidden="true">

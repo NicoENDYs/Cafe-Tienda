@@ -1,8 +1,9 @@
 <?php
 require_once '../models/MySQL.php';
 
-$mysql = new MySQL();
-$mysql->conectar();
+    $mysql = new MySQL();
+    $mysql->conectar();
+    $pdo = $mysql->getConexion();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener datos del formulario
@@ -20,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tipo = mime_content_type($_FILES['imagen_url']['tmp_name']);
 
         if (!array_key_exists($tipo, $permitidos)) {
-            header("Location: ../admin/nuevo_producto.php?estado=error&mensaje=Tipo de imagen no permitido");
+            header("Location: ../controllers/NuevoProducto.php?estado=error&mensaje=Tipo de imagen no permitido");
             exit();
         }
 
@@ -32,22 +33,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Mover imagen
         if (!move_uploaded_file($_FILES['imagen_url']['tmp_name'], $rutaAbsoluta)) {
-            header("Location: ../admin/nuevo_producto.php?estado=error&mensaje=Error al subir la imagen");
+            header("Location: ../controllers/NuevoProducto.php?estado=error&mensaje=Error al subir la imagen");
             exit();
         }
     }
 
     // Validación de campos obligatorios
     if (empty($nombre) || empty($descripcion) || empty($precio) || empty($stock)) {
-        header("Location: ../admin/nuevo_producto.php?estado=error&mensaje=Todos los campos son obligatorios");
+        header("Location: ../controllers/NuevoProducto.php?estado=error&mensaje=Todos los campos son obligatorios");
         exit();
     }
 
     try {
         // Consulta preparada usando tu clase PDO
         $stmt = $mysql->prepare("
-            INSERT INTO productos (nombre, descripcion, precio, stock, id_categoria, imagen_url)
-            VALUES (:nombre, :descripcion, :precio, :stock, :id_categoria, :imagen_url)
+            INSERT INTO productos (nombre, descripcion, precio, stock, id_categoria, imagen_url, estado)
+            VALUES (:nombre, :descripcion, :precio, :stock, :id_categoria, :imagen_url, :estado)
         ");
 
         $resultado = $stmt->execute([
@@ -56,18 +57,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':precio' => $precio,
             ':stock' => $stock,
             ':id_categoria' => $categoria,
-            ':imagen_url' => $ruta_imagen
+            ':imagen_url' => $ruta_imagen,
+            ':estado' => 0 // Estado 0 para indicar que el producto está activo
         ]);
 
         if ($resultado) {
             header("Location: ../admin/productos.php?estado=exito");
         } else {
-            header("Location: ../admin/nuevo_producto.php?estado=error&mensaje=No se pudo insertar el producto");
+            header("Location: ../controllers/NuevoProducto.php?estado=error&mensaje=No se pudo insertar el producto");
         }
 
     } catch (PDOException $e) {
         error_log("Error al insertar producto: " . $e->getMessage());
-        header("Location: ../admin/nuevo_producto.php?estado=error&mensaje=Error interno");
+        header("Location: ../controllers/NuevoProducto.php?estado=error&mensaje=Error interno");
     }
 
     $mysql->desconectar();
