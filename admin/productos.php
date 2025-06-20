@@ -153,6 +153,66 @@ $mysql->desconectar();
                 <?php else: ?>
                     <p class="text-center mt-5 text-black">No hay productos registrados.</p>
                 <?php endif; ?>
+
+                <!--modal de edicion-->
+                <?php foreach ($result as $producto): ?>
+                <div class="modal fade" id="modalEditar<?php echo $producto['id_producto']; ?>" tabindex="-1" aria-labelledby="editModalLabel<?php echo $producto['id_producto']; ?>" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="form-container">
+                                    <h2>Editar Producto</h2>
+                                    <form id="editProductForm<?php echo $producto['id_producto']; ?>" action="../controllers/EditarProducto.php" method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="id_producto" value="<?php echo $producto['id_producto']; ?>">
+                                        <input type="hidden" name="imagen_actual" value="<?php echo $producto['imagen_url']; ?>">
+
+                                        <div class="form-group">
+                                            <input type="text" name="nombre" value="<?php echo htmlspecialchars($producto['nombre']); ?>" placeholder="Nombre del producto" required />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <textarea name="descripcion" placeholder="Descripción del producto" required><?php echo htmlspecialchars($producto['descripcion']); ?></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="number" name="precio" value="<?php echo $producto['precio']; ?>" placeholder="Precio ($)" step="0.01" min="0" required />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="number" name="stock" value="<?php echo $producto['stock']; ?>" placeholder="Cantidad en stock" min="0" required />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <select name="id_categoria" required>
+                                                <option value="">Selecciona una categoría</option>
+                                                <?php foreach ($categorias as $fila):
+                                                    $selected = ($fila['id_categoria'] == $producto['id_categoria']) ? 'selected' : '';
+                                                ?>
+                                                    <option value="<?php echo $fila['id_categoria']; ?>" <?php echo $selected; ?>>
+                                                        <?php echo htmlspecialchars($fila['nombre']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group file-input">
+                                            <input type="file" name="imagen_url" id="edit_fileInput<?php echo $producto['id_producto']; ?>" />
+                                            <label for="edit_fileInput<?php echo $producto['id_producto']; ?>">Seleccionar nueva imagen</label>
+                                            <span class="file-name" id="edit_fileSelectedName<?php echo $producto['id_producto']; ?>">Sin archivos seleccionados</span>
+                                            <div class="mt-2">
+                                                <small>Imagen actual:</small><br>
+                                                <img src="<?php echo $producto['imagen_url']; ?>" class="img-thumbnail mt-1" style="max-width: 100px;">
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary mt-3">Guardar Cambios</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </main>
