@@ -8,7 +8,13 @@
     --dark-color: #333;
     --danger-color: #d32f2f;
     --success-color: #388e3c;
-    --accent-rgb: 109, 76, 65; /* Para efectos con transparencia */
+    --accent-rgb: 109, 76, 65;
+    --white: #ffffff;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-700: #495057;
+    --gray-800: #343a40;
 }
 
 * {
@@ -16,9 +22,18 @@
     padding: 0;
     box-sizing: border-box;
 }
-/* ESTILOS DEL SIDEBAR */
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--gray-100);
+    color: var(--dark-color);
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== ESTILOS PARA DESKTOP (SIDEBAR) ===== */
 .sidebar {
-    width: calc(280px - (100vw - 100%));
+    width: 280px;
     background: linear-gradient(180deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     color: white;
     position: fixed;
@@ -28,6 +43,7 @@
     overflow-y: auto;
     box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    transition: transform 0.3s ease;
 }
 
 .sidebar-header {
@@ -88,15 +104,30 @@
     width: 20px;
     text-align: center;
 }
-body {
-    font-family: "Poppins", sans-serif;
-    background-color: var(--gray-100); /* Usa el color claro de fondo */
-    color: var(--dark-color);
-    margin: 0;
-    padding: 0;
+
+/* Botón hamburguesa (oculto en desktop) */
+.menu-toggle {
+    display: none;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    width: 100%;
+    text-align: left;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Asegura que el layout principal funcione */
+.menu-toggle:hover {
+    background: var(--primary-dark);
+}
+
+/* Layout principal */
 .admin-layout {
     display: flex;
     min-height: 100vh;
@@ -105,11 +136,93 @@ body {
 .main-content {
     flex: 1;
     padding: 2rem;
-    margin-left: 280px; /* Igual al ancho del sidebar */
+    margin-left: 280px;
     background-color: var(--gray-100);
+    transition: margin-left 0.3s ease;
 }
 
-/* Corrige el header */
+/* ===== RESPONSIVE DESIGN - MOBILE ===== */
+@media (max-width: 768px) {
+    /* Mostrar botón hamburguesa */
+    .menu-toggle {
+        display: block;
+    }
+    
+    /* Transformar sidebar en navbar móvil */
+    .sidebar {
+        transform: translateX(-100%);
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    /* Overlay para cerrar el menú */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+    
+    .sidebar-overlay.active {
+        display: block;
+    }
+    
+    /* Ajustar contenido principal */
+    .main-content {
+        margin-left: 0;
+        padding-top: 5rem; /* Espacio para el botón hamburguesa */
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* Ajustar header del sidebar para móvil */
+    .sidebar-header {
+        padding-top: 4rem; /* Espacio para el botón */
+        position: relative;
+    }
+    
+    /* Botón cerrar en el sidebar móvil */
+    .sidebar-close {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+    
+    .sidebar-close:hover {
+        opacity: 1;
+    }
+    
+    /* Ajustar navegación para móvil */
+    .nav-link {
+        padding: 1.5rem 1.5rem;
+        font-size: 1.1rem;
+    }
+    
+    .nav-link:hover,
+    .nav-link.active {
+        transform: none;
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* ===== ESTILOS DEL DASHBOARD (sin cambios) ===== */
 .header {
     background: white;
     padding: 2rem;
@@ -117,7 +230,7 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     margin-bottom: 2rem;
     border-left: 4px solid var(--primary-color);
-    text-align: left; /* Alineación izquierda para el título */
+    text-align: left;
 }
 
 .header h1 {
@@ -300,7 +413,17 @@ body {
     box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
 }
 
+/* Responsive adicional para móviles */
 @media (max-width: 768px) {
+    .header h1 {
+        font-size: 2em;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+    
     .charts-grid {
         grid-template-columns: 1fr;
     }
@@ -309,8 +432,43 @@ body {
         grid-template-columns: 1fr;
     }
     
-    .chart-container {
-        min-width: auto;
+    .chart-container,
+    .table-container {
+        padding: 20px;
+    }
+    
+    .date-selector {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .date-input {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 1rem 0.5rem;
+        padding-top: 4.5rem;
+    }
+    
+    .header {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .header h1 {
+        font-size: 1.8em;
+    }
+    
+    .stat-card {
+        padding: 20px;
+    }
+    
+    .stat-value {
+        font-size: 2em;
     }
 }
 

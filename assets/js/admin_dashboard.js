@@ -4,56 +4,7 @@
         let topProductsChart;
 
         // Datos simulados (en un proyecto real, estos vendrían de la base de datos via AJAX)
-        const dashboardData = {
-            stats: {
-                totalRevenue: 2850000,
-                totalOrders: 156,
-                totalProducts: 892,
-                activeEmployees: 8
-            },
-            monthlyRevenue: [
-                { month: 'Ene', revenue: 1200000 },
-                { month: 'Feb', revenue: 1450000 },
-                { month: 'Mar', revenue: 1680000 },
-                { month: 'Abr', revenue: 1520000 },
-                { month: 'May', revenue: 1850000 },
-                { month: 'Jun', revenue: 2100000 },
-                { month: 'Jul', revenue: 2350000 },
-                { month: 'Ago', revenue: 2200000 },
-                { month: 'Sep', revenue: 2450000 },
-                { month: 'Oct', revenue: 2650000 },
-                { month: 'Nov', revenue: 2800000 },
-                { month: 'Dic', revenue: 2850000 }
-            ],
-            topProducts: [
-                { name: 'Café Americano', sales: 245, revenue: 490000 },
-                { name: 'Cappuccino', sales: 189, revenue: 567000 },
-                { name: 'Latte', sales: 156, revenue: 624000 },
-                { name: 'Expreso', sales: 134, revenue: 268000 },
-                { name: 'Mocha', sales: 98, revenue: 392000 },
-                { name: 'Frappé', sales: 87, revenue: 435000 },
-                { name: 'Chocolate Caliente', sales: 76, revenue: 228000 },
-                { name: 'Té Verde', sales: 54, revenue: 162000 }
-            ],
-            employeeRevenue: [
-                { name: 'Ana García', role: 'Cajero', sales: 45, revenue: 890000 },
-                { name: 'Carlos López', role: 'Mesero', sales: 38, revenue: 750000 },
-                { name: 'María Rodríguez', role: 'Cajero', sales: 42, revenue: 820000 },
-                { name: 'Juan Pérez', role: 'Mesero', sales: 31, revenue: 590000 },
-                { name: 'Laura Martín', role: 'Mesero', sales: 28, revenue: 540000 },
-                { name: 'Diego Silva', role: 'Cocinero', sales: 0, revenue: 0 },
-                { name: 'Carmen Vega', role: 'Mesero', sales: 25, revenue: 480000 },
-                { name: 'Roberto Cruz', role: 'Cocinero', sales: 0, revenue: 0 }
-            ],
-            waiterTables: [
-                { name: 'Carlos López', tables: 24, orders: 38, average: 1.58 },
-                { name: 'María Rodríguez', tables: 28, orders: 42, average: 1.50 },
-                { name: 'Juan Pérez', tables: 19, orders: 31, average: 1.63 },
-                { name: 'Laura Martín', tables: 17, orders: 28, average: 1.65 },
-                { name: 'Carmen Vega', tables: 15, orders: 25, average: 1.67 }
-            ]
-        };
-
+        
         // Función para formatear números como moneda
         function formatCurrency(amount) {
             return new Intl.NumberFormat('es-CO', {
@@ -77,7 +28,6 @@
             document.getElementById('totalRevenue').textContent = formatCurrency(dashboardData.stats.totalRevenue);
             document.getElementById('totalOrders').textContent = dashboardData.stats.totalOrders.toLocaleString();
             document.getElementById('totalProducts').textContent = dashboardData.stats.totalProducts.toLocaleString();
-            document.getElementById('activeEmployees').textContent = dashboardData.stats.activeEmployees;
         }
 
         // RF-12: Crear gráfico de recaudo mensual
@@ -248,3 +198,60 @@
 
         // Actualizar automáticamente cada 5 minutos
         setInterval(updateDashboard, 300000);
+
+
+        // JavaScript para el menú responsive
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarClose = document.getElementById('sidebarClose');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    // Abrir menú
+    menuToggle.addEventListener('click', function() {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+    });
+
+    // Cerrar menú con botón X
+    sidebarClose.addEventListener('click', function() {
+        closeSidebar();
+    });
+
+    // Cerrar menú con overlay
+    sidebarOverlay.addEventListener('click', function() {
+        closeSidebar();
+    });
+
+    // Cerrar menú al hacer clic en un enlace (solo en móvil)
+    navLinks.forEach(function(link) {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                closeSidebar();
+            }
+        });
+    });
+
+    // Función para cerrar el sidebar
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restaurar scroll del body
+    }
+
+    // Cerrar menú con tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+            closeSidebar();
+        }
+    });
+
+    // Manejar redimensionamiento de ventana
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            closeSidebar();
+        }
+    });
+});
