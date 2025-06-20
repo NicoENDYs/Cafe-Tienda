@@ -44,7 +44,7 @@
                 <label for="confirm_password">Confirmar contraseña:</label>
                 <div class="password-container">
                     <input type="password" id="confirmar_password" name="confirmar_password" required placeholder="Repite tu contraseña" minlength="8">
-                    <span class="toggle-password" onclick="togglePasswordVisibility('confirm_password')">👁️</span>
+                    <span class="toggle-password" onclick="togglePasswordVisibility('confirmar_password')">👁️</span>
                 </div>
             </div>
             

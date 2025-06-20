@@ -1,20 +1,28 @@
 <?php
 require_once 'models/MySQL.php';
 
-
 $mysql = new MySQL();
 $mysql->conectar();
+$pdo = $mysql->getConexion(); // Obtiene la conexión PDO
 // Ahora puedes usar $mysql->getConexion() para obtener el objeto mysqli
 
-$resultado = $mysql->efectuarConsulta("SELECT productos.id_producto,productos.nombre,productos.descripcion,productos.precio,productos.stock,categorias.nombre as nombre_categoria,productos.imagen_url 
-FROM `productos` 
-JOIN categorias on categorias.id_categoria = productos.id_categoria 
-");
+$consulta = "SELECT productos.id_producto, productos.nombre, productos.descripcion, productos.precio, productos.stock, 
+            categorias.nombre AS nombre_categoria, productos.imagen_url 
+            FROM productos 
+            JOIN categorias ON categorias.id_categoria = productos.id_categoria";
 
+try {
+    $stmt = $pdo->prepare($consulta);
+    $stmt->execute();
+    $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error al obtener los productos: " . $e->getMessage();
+    $productos = [];
+}
 
 $mysql->desconectar();
-
 ?>
+
 
 
 <!DOCTYPE html>
@@ -88,44 +96,39 @@ $mysql->desconectar();
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
 
-                <?php if (mysqli_num_rows($resultado) > 0): ?>
-                    <!-- Producto 1 -->
-
-                    <?php while ($producto = mysqli_fetch_assoc($resultado)): ?>
-                        <!-- Product 1 -->
+                <?php if (count($productos) > 0): ?>
+                    <?php foreach ($productos as $producto): ?>
                         <div class="card-container">
                             <div class="card">
                                 <!-- Frente de la tarjeta -->
                                 <div class="card-front">
-                                    <img src="<?php echo $producto['imagen_url']; ?>" alt="Producto">
-                                    <h3><?php echo $producto['nombre']; ?></h3>
+                                    <img src="<?php echo htmlspecialchars($producto['imagen_url']); ?>" alt="Producto">
+                                    <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
                                 </div>
 
                                 <!-- Reverso de la tarjeta -->
                                 <div class="card-back">
                                     <div class="row">
                                         <h4 id="descripcion-titulo">Descripción</h4>
-                                        <p><?php echo $producto['descripcion']; ?></p>
+                                        <p><?php echo htmlspecialchars($producto['descripcion']); ?></p>
                                         <br>
                                         <h4 id="descripcion-titulo">Categoría</h4>
-                                        <p><?php echo $producto['nombre_categoria']; ?></p>
+                                        <p><?php echo htmlspecialchars($producto['nombre_categoria']); ?></p>
                                         <br>
                                         <h4 id="descripcion-titulo">Stock</h4>
-                                        <p><?php echo $producto['stock']; ?></p>
+                                        <p><?php echo htmlspecialchars($producto['stock']); ?></p>
                                         <br>
                                         <h4 id="descripcion-titulo">Precio</h4>
-                                        <p>$<?php echo $producto['precio']; ?></p>
+                                        <p>$<?php echo htmlspecialchars($producto['precio']); ?></p>
                                         <img src="<?php echo $producto['imagen_url']; ?>" alt="Producto">
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <p class="text-center mt-5 text-black">No hay Productos.</p>
                 <?php endif; ?>
-
             </div>
         </div>
     </section>
