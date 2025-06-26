@@ -133,7 +133,7 @@ $mysql->desconectar();
                         <?php foreach ($result as $producto): ?>
                             <tr>
                                 <td><strong><?php echo $producto['id_producto']; ?></strong></td>
-                                <td><img src="<?php echo $producto['imagen_url']; ?>" alt="<?php echo $producto['nombre']; ?>" class="product-img"></td>
+                                <td><img src="../<?php echo $producto['imagen_url']; ?>" alt="<?php echo $producto['nombre']; ?>" class="product-img"></td>
                                 <td><strong><?php echo $producto['nombre']; ?></strong></td>
                                 <td><?php echo $producto['nombre_categoria']; ?></td>
                                 <td>$<?php echo number_format($producto['precio'], 2); ?></td>

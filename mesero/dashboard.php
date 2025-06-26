@@ -4,61 +4,11 @@ require_once('../models/MySQL.php');
 
 $mysql = new MySQL();
 $mysql->conectar();
-//ingresos
-$consulta = "SELECT SUM(total) AS total FROM ventas;";
+
+/* $consulta = "";
 $stmt = $mysql->prepare($consulta);
-$stmt->execute();
-$ventas = $stmt->fetch(PDO::FETCH_ASSOC);
-$total_ventas = $ventas['total'] ?? 0;
+$stmt->execute(); */
 
-//VENTAS MES
-$consulta_ventas_mes = "
-    SELECT 
-        DATE_FORMAT(fecha_venta, '%b') AS month,
-        SUM(total) AS revenue
-    FROM ventas 
-    WHERE fecha_venta >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
-    GROUP BY DATE_FORMAT(fecha_venta, '%Y-%m'), DATE_FORMAT(fecha_venta, '%b')
-    ORDER BY DATE_FORMAT(fecha_venta, '%Y-%m')
-";
-
-$stmt = $mysql->prepare($consulta_ventas_mes);
-$stmt->execute();
-$ventas_por_mes = [];
-
-while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $ventas_por_mes[] = [
-        'month' => $fila['month'],
-        'revenue' => (float)$fila['revenue']
-    ];
-}
-
-//TOP PRODUCTOS
-$consulta_top_products = "
-    SELECT 
-        p.nombre AS name,
-        SUM(dv.cantidad) AS sales,
-        SUM(dv.subtotal) AS revenue
-    FROM detalle_ventas dv
-    INNER JOIN productos p ON dv.id_producto = p.id_producto
-    GROUP BY dv.id_producto, p.nombre
-    ORDER BY sales DESC
-    LIMIT 8
-";
-
-$stmt = $mysql->prepare($consulta_top_products);
-$stmt->execute();
-$topProducts = [];
-
-while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $topProducts[] = [
-        'name' => $fila['name'],
-        'sales' => (int)$fila['sales'],
-        'revenue' => (float)$fila['revenue']
-    ];
-}
-
-$mysql->desconectar();
 ?>
 
 <!DOCTYPE html>
