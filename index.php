@@ -736,77 +736,150 @@ $mysql->desconectar();
         });
     });
 
-    // Confirmar pedido con validación final de stock
-    document.getElementById('confirmar-pedido').addEventListener('click', function() {
-        if (carrito.length === 0) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Carrito vacío',
-                text: 'No hay productos en tu pedido para confirmar',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Entendido'
-            });
-            return;
-        }
-
-        // Verificar stock antes de confirmar
-        const productosSinStock = carrito.filter(producto => {
-            return producto.cantidad > producto.stock;
+   // Confirmar pedido con validación final de stock y envío al servidor
+document.getElementById('confirmar-pedido').addEventListener('click', function() {
+    if (carrito.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Carrito vacío',
+            text: 'No hay productos en tu pedido para confirmar',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Entendido'
         });
+        return;
+    }
 
-        if (productosSinStock.length > 0) {
-            const listaProductos = productosSinStock.map(p => 
-                `<li>${p.nombre} (Pedido: ${p.cantidad}, Stock: ${p.stock})</li>`
-            ).join('');
-            
-            Swal.fire({
-                icon: 'error',
-                title: 'Problema con el stock',
-                html: `Los siguientes productos no tienen suficiente stock:<ul>${listaProductos}</ul>`,
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'Entendido'
-            });
-            return;
-        }
+    // Verificar stock antes de confirmar
+    const productosSinStock = carrito.filter(producto => {
+        return producto.cantidad > producto.stock;
+    });
 
-        // Mostrar resumen del pedido
-        const total = carrito.reduce((sum, producto) => sum + (producto.precio * producto.cantidad), 0);
+    if (productosSinStock.length > 0) {
+        const listaProductos = productosSinStock.map(p => 
+            `<li>${p.nombre} (Pedido: ${p.cantidad}, Stock: ${p.stock})</li>`
+        ).join('');
         
         Swal.fire({
-            title: 'Confirmar Pedido',
-            html: `
-                <p>¿Estás seguro de que quieres confirmar tu pedido?</p>
-                <div class="my-4 p-3 bg-gray-100 rounded">
-                    <p class="font-medium">Resumen:</p>
-                    <ul class="list-disc pl-5 mt-2">
-                        ${carrito.map(p => `<li>${p.nombre} (${p.cantidad} x $${p.precio.toFixed(2)})</li>`).join('')}
-                    </ul>
-                    <p class="mt-2 font-bold">Total: $${total.toFixed(2)}</p>
-                </div>
-            `,
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#28a745',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, confirmar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Aquí iría el código para enviar el pedido al servidor
-                // Por ahora solo limpiaremos el carrito
-                
-                carrito = [];
-                guardarCarrito();
-                actualizarCarritoUI();
-                
-                Swal.fire(
-                    '¡Pedido Confirmado!',
-                    'Tu pedido ha sido recibido y está siendo procesado.',
-                    'success'
-                );
-            }
+            icon: 'error',
+            title: 'Problema con el stock',
+            html: `Los siguientes productos no tienen suficiente stock:<ul>${listaProductos}</ul>`,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Entendido'
         });
+        return;
+    }
+
+    // Mostrar resumen del pedido
+    const total = carrito.reduce((sum, producto) => sum + (producto.precio * producto.cantidad), 0);
+    
+    Swal.fire({
+        title: 'Confirmar Pedido',
+        html: `
+            <p>¿Estás seguro de que quieres confirmar tu pedido?</p>
+            <div class="my-4 p-3 bg-gray-100 rounded">
+                <p class="font-medium">Resumen:</p>
+                <ul class="list-disc pl-5 mt-2">
+                    ${carrito.map(p => `<li>${p.nombre} (${p.cantidad} x $${p.precio.toFixed(2)})</li>`).join('')}
+                </ul>
+                <p class="mt-2 font-bold">Total: $${total.toFixed(2)}</p>
+            </div>
+            <div class="mt-4">
+                <label for="numero-mesa" class="block text-sm font-medium text-gray-700 mb-2">Número de Mesa (opcional):</label>
+                <input type="number" id="numero-mesa" class="w-full px-3 py-2 border border-gray-300 rounded-md" min="1" max="50" placeholder="Ej: 5">
+            </div>
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, confirmar',
+        cancelButtonText: 'Cancelar',
+        preConfirm: () => {
+            const numeroMesa = document.getElementById('numero-mesa').value;
+            return numeroMesa ? parseInt(numeroMesa) : null;
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Preparar datos para enviar al servidor
+            const datosPedido = {
+                productos: carrito.map(producto => ({
+                    id: producto.id,
+                    nombre: producto.nombre,
+                    cantidad: producto.cantidad,
+                    precio: producto.precio
+                })),
+                numero_mesa: result.value
+            };
+
+            // Mostrar loading
+            Swal.fire({
+                title: 'Procesando pedido...',
+                html: 'Por favor espera mientras procesamos tu pedido',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            // Enviar pedido al servidor
+            fetch('./controllers/procesar_pedido.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datosPedido)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Limpiar carrito
+                    carrito = [];
+                    guardarCarrito();
+                    actualizarCarritoUI();
+                    
+                    // Mostrar éxito con información del pedido
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Pedido Confirmado!',
+                        html: `
+                            <div class="text-left">
+                                <p class="mb-2"><strong>Número de pedido:</strong> #${data.data.id_pedido}</p>
+                                <p class="mb-2"><strong>Total:</strong> $${data.data.total}</p>
+                                <p class="mb-2"><strong>Estado:</strong> ${data.data.estado}</p>
+                                ${data.data.numero_mesa ? `<p class="mb-2"><strong>Mesa:</strong> ${data.data.numero_mesa}</p>` : ''}
+                                <p class="mt-4 text-sm text-gray-600">Tu pedido está siendo preparado. ¡Gracias por tu compra!</p>
+                            </div>
+                        `,
+                        confirmButtonColor: '#28a745',
+                        confirmButtonText: 'Entendido'
+                    });
+                } else {
+                    // Error del servidor
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error al procesar el pedido',
+                        text: data.error || 'Ha ocurrido un error inesperado',
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: 'Entendido'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No se pudo conectar con el servidor. Por favor intenta nuevamente.',
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'Entendido'
+                });
+            });
+        }
     });
+});
+
 
     // Mostrar/ocultar sección carrito según contenido
     function manejarVisibilidadCarrito() {
