@@ -4,10 +4,11 @@ require_once('../models/MySQL.php');
 
 $mysql = new MySQL();
 $mysql->conectar();
+$pdo = $mysql->getConexion();
 
-/* $consulta = "";
-$stmt = $mysql->prepare($consulta);
-$stmt->execute(); */
+$consulta = "select * from pedidos where estado = 'pendiente'";
+$stmt = $pdo->prepare($consulta);
+$stmt->execute(); 
 
 ?>
 
@@ -42,20 +43,40 @@ $stmt->execute(); */
                 <table>
                     <thead>
                         <tr>
-                            <th>Producto</th>
-                            <th>Ventas</th>
-                            <th>Ingresos</th>
+                            <th>ID</th>
+                            <th>TOTAL</th>
+                            <th>ESTADO</th>
+                            <th>FECHA</th>
+                            <th>NUMERO MESA</th>
+                            <th>ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!---se renderizaran los pedidos--->
+                        <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
+                            <tr>
+                                <td><?php echo $row['id_pedido']; ?></td>
+                                <td><?php echo $row['total']; ?></td>
+                                <td><?php echo $row['estado']; ?></td>
+                                <td><?php echo $row['fecha_pedido']; ?></td>
+                                <td><?php echo $row['numero_mesa']; ?></td>
+                                <td>
+                                <button class="btn-custom confirmar" onclick="redirigir('confirmar', <?php echo $row['id_pedido']; ?>)">
+                                    <i class="fas fa-edit"></i> Confirmar
+                                </button>
+                                <button class="btn-custom cancelar" onclick="redirigir('cancelar', <?php echo $row['id_pedido']; ?>)">
+                                    <i class="fas fa-trash"></i> Cancelar
+                                </button>
+                                </td>
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-
+<script src="../assets/js/redirigir.js"></script>
 
 </body>
 </html>
