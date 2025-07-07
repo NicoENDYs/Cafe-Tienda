@@ -1,6 +1,13 @@
 <?php
 require_once('../models/MySQL.php');
 
+session_start();
+
+if ($_SESSION['rol'] != "admin") {
+header("refresh:1;url=../views/login.php");
+exit();
+} 
+
 $mysql = new MySQL();
 $mysql->conectar();
 //ingresos

@@ -9,9 +9,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     $accion = $_GET['accion'];
 
-    if ($accion == 'listo') {
+    if ($accion == 'entregado') {
         $id_pedido = $_GET['id'];
-        $consulta = "UPDATE pedidos SET estado = 'listo' WHERE id_pedido = :id_pedido";
+        $consulta = "UPDATE pedidos SET estado = 'entregado' WHERE id_pedido = :id_pedido";
         $stmt = $pdo->prepare($consulta);
         $stmt->execute([':id_pedido' => $id_pedido]);
         header("Location: ../mesero/entregar.php?estado=exito&mensaje=Pedido Entregado");

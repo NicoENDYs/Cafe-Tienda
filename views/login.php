@@ -38,14 +38,6 @@
             </div>
             
             <button type="submit" class="btn">Ingresar</button>
-            
-            <div class="links">
-                <a href="forgot-password.php">¿Olvidaste tu contraseña?</a>
-            </div>
-            
-            <div class="divider">o</div>
-            
-            <a href="../views/registro.php" class="register-btn">Crear una cuenta nueva</a>
         </form>
     </div>
     <script src="../assets/js/esconder_password.js"></script>

@@ -2,6 +2,13 @@
 <?php
 require_once('../models/MySQL.php');
 
+session_start();
+
+if ($_SESSION['rol'] != "mesero") {
+header("refresh:1;url=../views/login.php");
+exit();
+} 
+
 $mysql = new MySQL();
 $mysql->conectar();
 $pdo = $mysql->getConexion();

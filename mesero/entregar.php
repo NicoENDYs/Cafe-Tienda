@@ -2,6 +2,13 @@
 <?php
 require_once('../models/MySQL.php');
 
+session_start();
+
+if ($_SESSION['rol'] != "mesero") {
+header("refresh:1;url=../views/login.php");
+exit();
+} 
+
 $mysql = new MySQL();
 $mysql->conectar();
 $pdo = $mysql->getConexion();
@@ -74,7 +81,7 @@ $stmt->execute();
                                 <td><?php echo $row['fecha_pedido']; ?></td>
                                 <td><?php echo $row['numero_mesa']; ?></td>
                                 <td>
-                                <button class="btn-custom confirmar" onclick="redirigir('listo', <?php echo $row['id_pedido']; ?>)">
+                                <button class="btn-custom confirmar" onclick="redirigir('entregado', <?php echo $row['id_pedido']; ?>)">
                                     <i class="fas fa-edit"></i> Entregado
                                 </button>
                                 </td>
