@@ -6,7 +6,7 @@ $mysql = new MySQL();
 $mysql->conectar();
 $pdo = $mysql->getConexion();
 
-$consulta = "select * from pedidos where estado = 'pendiente'";
+$consulta = "select * from pedidos where estado = 'listo'";
 $stmt = $pdo->prepare($consulta);
 $stmt->execute(); 
 
@@ -74,11 +74,8 @@ $stmt->execute();
                                 <td><?php echo $row['fecha_pedido']; ?></td>
                                 <td><?php echo $row['numero_mesa']; ?></td>
                                 <td>
-                                <button class="btn-custom confirmar" onclick="redirigir('confirmar', <?php echo $row['id_pedido']; ?>)">
-                                    <i class="fas fa-edit"></i> Confirmar
-                                </button>
-                                <button class="btn-custom cancelar" onclick="redirigir('cancelar', <?php echo $row['id_pedido']; ?>)">
-                                    <i class="fas fa-trash"></i> Cancelar
+                                <button class="btn-custom confirmar" onclick="redirigir('listo', <?php echo $row['id_pedido']; ?>)">
+                                    <i class="fas fa-edit"></i> Entregado
                                 </button>
                                 </td>
                             </tr>
