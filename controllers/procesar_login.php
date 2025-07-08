@@ -30,6 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['mesero'] = true;
                 header("Location: ../mesero/dashboard.php?estado=exito");
             }
+            if ($usuario['rol'] === 'cocina') {
+                $_SESSION['cocina'] = true;
+                header("Location: ../cocina/dashboard.php?estado=exito");
+            }
 
             exit();
         } else {
