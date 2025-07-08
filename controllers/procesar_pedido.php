@@ -34,7 +34,7 @@ try {
     // Iniciar transacción
     $pdo->beginTransaction();
     
-    // Calcular total y validar stock
+    // Calcular total y validar stock   
     $total = 0;
     $productosValidados = [];
     
