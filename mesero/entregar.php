@@ -44,13 +44,13 @@ $stmt->execute();
         <ul class="sidebar-nav">
         <li class="nav-item">
             <a href="../mesero/dashboard.php" class="nav-link" data-section="confirmar">
-                <i class=""></i>
+                <i class="fas fa-circle-check"></i>
                 Confirmar
             </a>
         </li>
         <li class="nav-item">
             <a href="../mesero/entregar.php" class="nav-link" data-section="entregar">
-                <i class=""></i>
+                <i class="fas fa-utensils"></i>
                 Entregar
             </a>
         </li>

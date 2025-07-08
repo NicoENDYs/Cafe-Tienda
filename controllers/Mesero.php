@@ -17,6 +17,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         header("Location: ../mesero/entregar.php?estado=exito&mensaje=Pedido Entregado");
     }
 
+    if ($accion == 'listo') {
+        $id_pedido = $_GET['id'];
+        $consulta = "UPDATE pedidos SET estado = 'listo' WHERE id_pedido = :id_pedido";
+        $stmt = $pdo->prepare($consulta);
+        $stmt->execute([':id_pedido' => $id_pedido]);
+        header("Location: ../cocina/dashboard.php?estado=exito&mensaje=Pedido Entregado");
+    }
+
     if ($accion == 'confirmar') {
         // Lógica para confirmar el pedido
         $id_pedido = $_GET['id'];
@@ -24,14 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $stmt = $pdo->prepare($consulta);
         $stmt->execute([':id_pedido' => $id_pedido]);
         header("Location: ../mesero/dashboard.php?estado=exito&mensaje=Pedido confirmado");
-    } elseif ($accion == 'cancelar') {
+    } 
+
+    if ($accion == 'cancelar') {
         // Lógica para cancelar el pedido
         $id_pedido = $_GET['id'];
         $consulta = "UPDATE pedidos SET estado = 'cancelado' WHERE id_pedido = :id_pedido";
         $stmt = $pdo->prepare($consulta);
         $stmt->execute([':id_pedido' => $id_pedido]);
         header("Location: ../mesero/dashboard.php?estado=exito&mensaje=Pedido cancelado");
-    } else {
-        header("Location: ../mesero/dashboard.php?estado=error&mensaje=Acción no válida");
-    }
+    } 
 }
