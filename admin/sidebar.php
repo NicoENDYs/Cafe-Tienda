@@ -15,11 +15,10 @@
                         <i class="fas fa-box"></i>
                         Productos
                     </a>
-                </li>
+                </li>   
                 <li class="nav-item">
-                    <a href="#" class="nav-link" data-section="usuarios">
-                        <i class="fas fa-users"></i>
-                        Usuarios
+                    <a class="nav-link" href="usuarios.php">
+                        <i class="fas fa-users"></i> Usuarios
                     </a>
                 </li>
                 <li class="nav-item">
