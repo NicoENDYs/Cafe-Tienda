@@ -81,7 +81,7 @@ $stmt->execute();
                                 <td><?php echo $row['fecha_pedido']; ?></td>
                                 <td><?php echo $row['numero_mesa']; ?></td>
                                 <td>
-                                <button class="btn-custom confirmar" onclick="redirigir('entregado', <?php echo $row['id_pedido']; ?>)">
+                                <button class="btn-custom confirmar" onclick="redirigir2('entregado', <?php echo $row['id_pedido']?>, <?php echo $_SESSION['id_usuario']; ?>, <?php echo $row['total']; ?>)">
                                     <i class="fas fa-edit"></i> Entregado
                                 </button>
                                 </td>
