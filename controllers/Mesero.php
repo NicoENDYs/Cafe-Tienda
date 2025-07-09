@@ -45,6 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         ]);
     }
 
+    //link de redirreccion para generar el pdf de la factura
+    //aqui
+
     header("Location: ../mesero/entregar.php?estado=exito&mensaje=Pedido Entregado");
 }
 
