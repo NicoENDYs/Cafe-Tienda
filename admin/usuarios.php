@@ -45,6 +45,65 @@ $mysql->desconectar();
     <link rel="stylesheet" href="../assets/css/admin_usuarios.css">
 </head>
 <body>
+    <div class="admin-layout">
+        <?php include('sidebar.php'); ?>
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+            <span style="margin-left: 10px;">Mi Tienda</span>
+        </button>
+
+        <!-- Overlay para cerrar el menú en móvil -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Sidebar/Navbar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <!-- Botón cerrar para móvil -->
+                <!-- <button class="sidebar-close" id="sidebarClose">
+            <i class="fas fa-times"></i>
+        </button> -->
+                <h3><i class="fas fa-store"></i> Mi Tienda</h3>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="nav-item">
+                    <a href="./dashboard.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : '' ?>" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="./productos.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'productos.php' ? 'active' : '' ?>" data-section="productos">
+                        <i class="fas fa-box"></i>
+                        Productos
+                    </a>
+                </li>
+                <!-- Dentro de la barra lateral -->
+                <li class="nav-item">
+                    <a class="nav-link" href="usuarios.php">
+                        <i class="fas fa-users"></i> Usuarios
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="reportes">
+                        <i class="fas fa-chart-bar"></i>
+                        Reportes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="configuracion">
+                        <i class="fas fa-cog"></i>
+                        Configuración
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Cerrar Sesión
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
     <div class="admin-container">
         <!-- Encabezado -->
         <div class="page-header">
@@ -274,6 +333,8 @@ $mysql->desconectar();
                 });
             }
         });
+
+        
     </script>
 </body>
 </html>
