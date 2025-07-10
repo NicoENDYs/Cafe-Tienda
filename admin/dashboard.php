@@ -187,18 +187,6 @@ $mysql->desconectar();
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" data-section="reportes">
-                        <i class="fas fa-chart-bar"></i>
-                        Reportes
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-section="configuracion">
-                        <i class="fas fa-cog"></i>
-                        Configuración
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="#" class="nav-link" data-section="logout">
                         <i class="fas fa-sign-out-alt"></i>
                         Cerrar Sesión
