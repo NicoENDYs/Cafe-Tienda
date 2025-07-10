@@ -64,6 +64,70 @@ while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     ];
 }
 
+
+// INGRESOS POR EMPLEADO (RF-14)
+$consulta_employee_revenue = "
+    SELECT 
+        u.nombre AS name,
+        u.rol AS role,
+        COUNT(v.id_venta) AS sales,
+        COALESCE(SUM(v.total), 0) AS revenue
+    FROM usuarios u
+    LEFT JOIN ventas v ON u.id_usuario = v.id_usuario
+    WHERE u.estado = 0
+    GROUP BY u.id_usuario, u.nombre, u.rol
+    ORDER BY revenue DESC
+";
+
+$stmt = $mysql->prepare($consulta_employee_revenue);
+$stmt->execute();
+$employeeRevenue = [];
+
+while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $employeeRevenue[] = [
+        'name' => $fila['name'],
+        'role' => ucfirst($fila['role']), // Capitalizar primera letra
+        'sales' => (int)$fila['sales'],
+        'revenue' => (float)$fila['revenue']
+    ];
+}
+
+// MESAS ATENDIDAS POR MESERO (RF-15)
+$consulta_waiter_tables = "
+    SELECT 
+        u.nombre AS name,
+        COUNT(DISTINCT p.numero_mesa) AS tables,
+        COUNT(p.id_pedido) AS orders,
+        CASE 
+            WHEN COUNT(DISTINCT p.numero_mesa) > 0 
+            THEN ROUND(COUNT(p.id_pedido) / COUNT(DISTINCT p.numero_mesa), 2)
+            ELSE 0 
+        END AS average
+    FROM usuarios u
+    LEFT JOIN ventas v ON u.id_usuario = v.id_usuario
+    LEFT JOIN pedidos p ON v.id_pedido = p.id_pedido
+    WHERE u.rol IN ('mesero', 'admin') 
+    AND u.estado = 0
+    AND p.numero_mesa IS NOT NULL
+    GROUP BY u.id_usuario, u.nombre
+    HAVING COUNT(p.id_pedido) > 0
+    ORDER BY orders DESC
+";
+
+$stmt = $mysql->prepare($consulta_waiter_tables);
+$stmt->execute();
+$waiterTables = [];
+
+while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $waiterTables[] = [
+        'name' => $fila['name'],
+        'tables' => (int)$fila['tables'],
+        'orders' => (int)$fila['orders'],
+        'average' => (float)$fila['average']
+    ];
+}
+
+
 $mysql->desconectar();
 ?>
 
@@ -272,86 +336,24 @@ $mysql->desconectar();
                                 }
                                 ?>,
 
-                employeeRevenue: [{
-                        name: 'Ana García',
-                        role: 'Cajero',
-                        sales: 45,
-                        revenue: 890000
-                    },
-                    {
-                        name: 'Carlos López',
-                        role: 'Mesero',
-                        sales: 38,
-                        revenue: 750000
-                    },
-                    {
-                        name: 'María Rodríguez',
-                        role: 'Cajero',
-                        sales: 42,
-                        revenue: 820000
-                    },
-                    {
-                        name: 'Juan Pérez',
-                        role: 'Mesero',
-                        sales: 31,
-                        revenue: 590000
-                    },
-                    {
-                        name: 'Laura Martín',
-                        role: 'Mesero',
-                        sales: 28,
-                        revenue: 540000
-                    },
-                    {
-                        name: 'Diego Silva',
-                        role: 'Cocinero',
-                        sales: 0,
-                        revenue: 0
-                    },
-                    {
-                        name: 'Carmen Vega',
-                        role: 'Mesero',
-                        sales: 25,
-                        revenue: 480000
-                    },
-                    {
-                        name: 'Roberto Cruz',
-                        role: 'Cocinero',
-                        sales: 0,
-                        revenue: 0
-                    }
-                ],
-                waiterTables: [{
-                        name: 'Carlos López',
-                        tables: 24,
-                        orders: 38,
-                        average: 1.58
-                    },
-                    {
-                        name: 'María Rodríguez',
-                        tables: 28,
-                        orders: 42,
-                        average: 1.50
-                    },
-                    {
-                        name: 'Juan Pérez',
-                        tables: 19,
-                        orders: 31,
-                        average: 1.63
-                    },
-                    {
-                        name: 'Laura Martín',
-                        tables: 17,
-                        orders: 28,
-                        average: 1.65
-                    },
-                    {
-                        name: 'Carmen Vega',
-                        tables: 15,
-                        orders: 25,
-                        average: 1.67
-                    }
-                ]
+                employeeRevenue: <?php
+                                if (!empty($employeeRevenue)) {
+                                    echo json_encode($employeeRevenue);
+                                } else {
+                                    echo json_encode([
+                                        ['name' => 'Sin datos', 'role' => 'N/A', 'sales' => 0, 'revenue' => 0]
+                                    ]);
+                                }
+                                ?>,
+                waiterTables: <?php
+                                if (!empty($waiterTables)) {
+                                    echo json_encode($waiterTables);
+                                } else {
+                                    echo json_encode([
+                                        ['name' => 'Sin datos', 'tables' => 0, 'orders' => 0, 'average' => 0]
+                                    ]);
+                                }
+                                ?>
             };
         </script>
 </body>
