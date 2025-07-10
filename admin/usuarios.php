@@ -45,7 +45,6 @@ $mysql->desconectar();
     <link rel="stylesheet" href="../assets/css/admin_usuarios.css">
 </head>
 <body>
-    <div class="admin-layout">
         <?php include('sidebar.php'); ?>
         <button class="menu-toggle" id="menuToggle">
             <i class="fas fa-bars"></i>
