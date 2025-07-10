@@ -76,6 +76,9 @@ $mysql->desconectar();
             <div class="section-header">
                 <h2 class="section-title"><i class="fas fa-list"></i> Lista de Productos</h2>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Añadir Producto</button>
+                <form action="../controllers/generarReporteStock.php" method="post">
+                    <button type="submit">Reporte de Stock</button>
+                </form>
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -121,7 +124,7 @@ $mysql->desconectar();
                     </div>
                 </div>
             </div>
-
+section-header
             <div class="table-container">
                 <?php if (count($result) > 0): ?>
                     <table class="table" id="productsTable">
