@@ -49,7 +49,6 @@ foreach ($productos as $producto) {
 
 // Guardar PDF
 $filename = "../assets/reportes/stock_" . date('Ymd_His') . ".pdf";
-$pdf->Output('F', $filepath); // Guardar en servidor
-$pdf->Output('D', $filename); // Forzar descarga
+$pdf->Output('F', $filename);
+$pdf->Output('D', $filename);
 
-header("Location: ../admin/productos.php?estado=exito");
