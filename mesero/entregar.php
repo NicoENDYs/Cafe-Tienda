@@ -58,6 +58,12 @@ $stmt->execute();
         </nav>
 
     <div class="main-content">
+
+        <div class="page-header">
+            <h1><i class="fas fa-utensils"></i> Pedidos Listos</h1>
+            <p>Lleva los pedidos a la mesa correspondiente.</p>
+        </div>
+
         <div class="row">
             <div class="col">
                 <table>
