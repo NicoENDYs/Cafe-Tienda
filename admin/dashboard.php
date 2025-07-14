@@ -663,6 +663,13 @@ $mysql->desconectar();
                         <i class="fas fa-users"></i> Usuarios
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="./facturas.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'facturas.php' ? 'active' : '' ?>" data-section="facturas">
+                        <i class="fas fa-file-invoice"></i>
+                        Facturas
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="../controllers/LogOut.php" class="nav-link" data-section="logout">
                         <i class="fas fa-sign-out-alt"></i>

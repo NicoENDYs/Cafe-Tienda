@@ -1,0 +1,75 @@
+/* Estilos para la página de facturas admin */
+.facturas-container {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    padding: 2rem 2.5rem;
+    max-width: 500px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+.facturas-container label {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+#select-factura {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    background: #f8f8f8;
+    transition: border 0.2s;
+}
+#select-factura:focus {
+    border: 1.5px solid var(--primary-color, #007bff);
+    outline: none;
+}
+
+.btn-factura {
+    display: inline-block;
+    background: var(--primary-color, #007bff);
+    color: #fff;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.btn-factura:hover {
+    background: var(--primary-dark, #0056b3);
+    color: #fff;
+}
+
+.facturas-container iframe {
+    margin-top: 1.5rem;
+    width: 100%;
+    min-height: 500px;
+    max-height: 80vh;
+    border: 1.5px solid #bbb;
+    border-radius: 8px;
+    background: #f8f8f8;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    /* Permitir zoom y scroll */
+    overflow: auto;
+}
+@media (max-width: 900px) {
+    .facturas-container iframe {
+        min-height: 320px;
+        max-height: 55vh;
+    }
+}
+
+@media (max-width: 600px) {
+    .facturas-container {
+        padding: 1rem 0.5rem;
+        max-width: 98vw;
+    }
+} 

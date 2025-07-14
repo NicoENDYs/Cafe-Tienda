@@ -210,6 +210,12 @@
                         <i class="fas fa-box"></i>
                         Productos
                     </a>
+                </li>  
+                <li class="nav-item">
+                <a href="./facturas.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'facturas.php' ? 'active' : '' ?>" data-section="facturas">
+                <i class="fas fa-file-invoice"></i>
+                        Facturas
+                    </a>
                 </li>   
                 <li class="nav-item">
                     <a class="nav-link" href="usuarios.php">
