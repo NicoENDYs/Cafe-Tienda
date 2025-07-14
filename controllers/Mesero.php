@@ -119,7 +119,15 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     // 5. Generar factura automáticamente
     try {
-        generarFacturaPDF($id_venta, $id_pedido, $_GET['total'], $detalles_pedido, $pdo);
+        $ruta_factura = generarFacturaPDF($id_venta, $id_pedido, $_GET['total'], $detalles_pedido, $pdo);
+        // Insertar la ruta en la tabla facturas_generadas
+        if ($ruta_factura) {
+            $consulta_factura = "INSERT INTO facturas_generadas (archivo_url) VALUES (:archivo_url)";
+            $stmt_factura = $pdo->prepare($consulta_factura);
+            // Guardar la ruta relativa desde la raíz del proyecto
+            $ruta_relativa = str_replace("../", "", $ruta_factura);
+            $stmt_factura->execute([':archivo_url' => $ruta_relativa]);
+        }
     } catch (Exception $e) {
         // Si hay error al generar factura, continuar sin interrumpir el flujo
         error_log("Error generando factura para venta $id_venta: " . $e->getMessage());
