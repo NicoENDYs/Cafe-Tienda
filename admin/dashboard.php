@@ -664,7 +664,7 @@ $mysql->desconectar();
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" data-section="logout">
+                    <a href="../controllers/LogOut.php" class="nav-link" data-section="logout">
                         <i class="fas fa-sign-out-alt"></i>
                         Cerrar Sesión
                     </a>
