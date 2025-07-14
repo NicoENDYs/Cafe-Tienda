@@ -783,10 +783,6 @@ document.getElementById('confirmar-pedido').addEventListener('click', function()
                 </ul>
                 <p class="mt-2 font-bold">Total: $${total.toFixed(2)}</p>
             </div>
-            <div class="mt-4">
-                <label for="numero-mesa" class="block text-sm font-medium text-gray-700 mb-2">Número de Mesa (opcional):</label>
-                <input type="number" id="numero-mesa" class="w-full px-3 py-2 border border-gray-300 rounded-md" min="1" max="50" placeholder="Ej: 5">
-            </div>
         `,
         icon: 'question',
         showCancelButton: true,
@@ -795,7 +791,7 @@ document.getElementById('confirmar-pedido').addEventListener('click', function()
         confirmButtonText: 'Sí, confirmar',
         cancelButtonText: 'Cancelar',
         preConfirm: () => {
-            const numeroMesa = document.getElementById('numero-mesa').value;
+            const numeroMesa = <?php echo $_GET['mesa'] ?>;
             return numeroMesa ? parseInt(numeroMesa) : null;
         }
     }).then((result) => {

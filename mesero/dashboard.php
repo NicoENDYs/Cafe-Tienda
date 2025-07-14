@@ -58,6 +58,12 @@ $stmt->execute();
         </nav>
 
     <div class="main-content">
+
+        <div class="page-header">
+            <h1><i class="fas fa-circle-check"></i> Gestión de Pedidos</h1>
+            <p>Administra los pedidos existentes.</p>
+        </div>
+        
         <div class="row">
             <div class="col">
                 <table>
@@ -81,12 +87,12 @@ $stmt->execute();
                                 <td><?php echo $row['fecha_pedido']; ?></td>
                                 <td><?php echo $row['numero_mesa']; ?></td>
                                 <td>
-                                <button class="btn-custom confirmar" onclick="redirigir('confirmar', <?php echo $row['id_pedido']; ?>)">
-                                    <i class="fas fa-edit"></i> Confirmar
-                                </button>
-                                <button class="btn-custom cancelar" onclick="redirigir('cancelar', <?php echo $row['id_pedido']; ?>)">
-                                    <i class="fas fa-trash"></i> Cancelar
-                                </button>
+                                    <button class="btn-custom confirmar" onclick="window.location.href='detalle_pedido.php?id=<?php echo $row['id_pedido']; ?>'">
+                                        <i class="fas fa-edit"></i> Ver/Editar
+                                    </button>
+                                    <button class="btn-custom cancelar" onclick="redirigir('cancelar', <?php echo $row['id_pedido']; ?>)">
+                                        <i class="fas fa-trash"></i> Cancelar
+                                    </button>
                                 </td>
                             </tr>
                         <?php } ?>
