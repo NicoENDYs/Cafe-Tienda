@@ -119,9 +119,8 @@ $mysql->desconectar();
                 <div class="section-header">
                     <h2 class="section-title"><i class="fas fa-list"></i> Lista de Productos</h2>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Añadir Producto</button>
-                    <form action="../controllers/generarReporteStock.php" method="post">
-                        <button type="submit">Reporte de Stock</button>
-                    </form>
+                    
+                        <a class="btn btn-primary" href="../controllers/generarReporteStock.php">Generar Reporte</a>
 
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -186,7 +185,7 @@ $mysql->desconectar();
                                 <?php foreach ($result as $producto): ?>
                                     <tr>
                                         <td><strong><?php echo $producto['id_producto']; ?></strong></td>
-                                        <td><img src="<?php echo $producto['imagen_url']; ?>" alt="<?php echo $producto['nombre']; ?>" class="product-img"></td>
+                                        <td><img src="../<?php echo $producto['imagen_url']; ?>" alt="<?php echo $producto['nombre']; ?>" class="product-img"></td>
                                         <td><strong><?php echo $producto['nombre']; ?></strong></td>
                                         <td><?php echo $producto['nombre_categoria']; ?></td>
                                         <td>$<?php echo number_format($producto['precio'], 2); ?></td>
