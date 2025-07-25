@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
     $pdo = $mysql->getConexion();
 
     try {
-        $stmt = $pdo->prepare("UPDATE usuarios SET estado = 1 WHERE id_usuario = :id");
+        $stmt = $pdo->prepare("UPDATE Usuarios SET estado = 1 WHERE id_usuario = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 

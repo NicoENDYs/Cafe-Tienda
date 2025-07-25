@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Verificar si el correo ya está registrado
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE correo = :correo");
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM Usuarios WHERE correo = :correo");
         $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
         $stmt->execute();
 

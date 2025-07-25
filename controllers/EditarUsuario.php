@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Verificar si el correo ya está registrado en otro usuario
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE correo = :correo AND id_usuario != :id");
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM Usuarios WHERE correo = :correo AND id_usuario != :id");
         $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();

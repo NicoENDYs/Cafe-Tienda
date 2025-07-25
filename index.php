@@ -887,17 +887,21 @@ document.getElementById('confirmar-pedido').addEventListener('click', function()
         }
     }
 
-    // Inicializar mapa
-    function inicializarMapa() {
-        const map = L.map('map').setView([19.4326, -99.1332], 15);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        
-        L.marker([19.4326, -99.1332]).addTo(map)
-            .bindPopup('Café Artesanal<br>¡Visítanos!')
-            .openPopup();
+   function inicializarMapa() {
+    if (map) {
+        // Ya existe el mapa, no hacer nada
+        return;
     }
+
+    map = L.map('map').setView([19.4326, -99.1332], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    
+    L.marker([19.4326, -99.1332]).addTo(map)
+        .bindPopup('Café Artesanal<br>¡Visítanos!')
+        .openPopup();
+}
 
     // Back to top functionality
     const backToTopButton = document.getElementById('back-to-top');

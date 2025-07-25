@@ -172,7 +172,6 @@ $mysql->desconectar();
                         </div>
                     </div>
                 </div>
-                section-header
                 <div class="table-container">
                     <?php if (count($result) > 0): ?>
                         <table class="table" id="productsTable">
