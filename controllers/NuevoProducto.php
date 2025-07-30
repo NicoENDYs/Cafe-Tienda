@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tipo = mime_content_type($_FILES['imagen_url']['tmp_name']);
 
         if (!array_key_exists($tipo, $permitidos)) {
-            header("Location: ../controllers/NuevoProducto.php?estado=error&mensaje=Tipo de imagen no permitido");
+            header("Location: ../admin/productos.php?estado=error&mensaje=Tipo de imagen no permitido");
             exit();
         }
 
@@ -33,17 +33,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Mover imagen
         if (!move_uploaded_file($_FILES['imagen_url']['tmp_name'], $rutaAbsoluta)) {
-            header("Location: ../controllers/NuevoProducto.php?estado=error&mensaje=Error al subir la imagen");
+            header("Location: ../admin/productos.php?estado=error&mensaje=Error al subir la imagen");
             exit();
         }
     }
 
     // Validación de campos obligatorios
     if (empty($nombre) || empty($descripcion) || empty($precio) || empty($stock)) {
-        header("Location: ../controllers/NuevoProducto.php?estado=error&mensaje=Todos los campos son obligatorios");
+        header("Location: ../admin/productos.php?estado=error&mensaje=Todos los campos son obligatorios");
         exit();
     }
-
+    if ($precio < 0 || $stock < 0) {
+        header("Location: ../admin/productos.php?estado=error&mensaje=No se permiten valores negativos");
+        exit();
+    }
     try {
         // Consulta preparada usando tu clase PDO
         $stmt = $mysql->prepare("
@@ -64,12 +67,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($resultado) {
             header("Location: ../admin/productos.php?estado=exito");
         } else {
-            header("Location: ../controllers/NuevoProducto.php?estado=error&mensaje=No se pudo insertar el producto");
+            header("Location: ../admin/productos.php?estado=error&mensaje=No se pudo insertar el producto");
         }
 
     } catch (PDOException $e) {
         error_log("Error al insertar producto: " . $e->getMessage());
-        header("Location: ../controllers/NuevoProducto.php?estado=error&mensaje=Error interno");
+        header("Location: ../admin/productos.php?estado=error&mensaje=Error interno");
     }
 
     $mysql->desconectar();

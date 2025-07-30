@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Construir consulta dinámica
-        $sql = "UPDATE usuarios SET 
+        $sql = "UPDATE Usuarios SET 
                 nombre = :nombre,
                 correo = :correo,
                 rol = :rol";

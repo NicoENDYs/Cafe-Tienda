@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Insertar el nuevo usuario
         $stmt = $pdo->prepare("
-            INSERT INTO usuarios (nombre, correo, password, rol, estado)
+            INSERT INTO Usuarios (nombre, correo, password, rol, estado)
             VALUES (:nombre, :correo, :password, :rol, 0)
         ");
 

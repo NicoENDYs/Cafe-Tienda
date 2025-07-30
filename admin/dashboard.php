@@ -310,10 +310,8 @@ $mysql->desconectar();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../assets/js/notificaciones.js"></script>
 </head>
-
-<body>
-    <style>
-        .modal-overlay {
+<style>
+    .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -627,7 +625,9 @@ $mysql->desconectar();
         font-size: 1.8rem;
     }
 }
-    </style>
+</style>
+
+<body>
     <div class="admin-layout">
         <?php include('sidebar.php'); ?>
         <button class="menu-toggle" id="menuToggle">

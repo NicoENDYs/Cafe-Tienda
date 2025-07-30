@@ -142,10 +142,10 @@ $mysql->desconectar();
                                                 <textarea name="descripcion" placeholder="Descripción del producto" required></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <input type="number" name="precio" placeholder="Precio ($)" step="0.01" min="0" required />
+                                                <input type="number" name="precio" placeholder="Precio ($)" step="0.01" min="0" required pattern="[0-9]"/>
                                             </div>
                                             <div class="form-group">
-                                                <input type="number" name="stock" placeholder="Cantidad en stock" min="0" required />
+                                                <input type="number" name="stock" placeholder="Cantidad en stock" min="0" required pattern="[0-9]" />
                                             </div>
 
                                             <select name="id_categoria" required>

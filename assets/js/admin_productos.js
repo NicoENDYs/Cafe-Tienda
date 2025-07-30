@@ -16,6 +16,20 @@ function updateFileName(id) {
   }
 }
 
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('keypress', function (e) {
+      if (e.key === '-' || e.key === '+') {
+        e.preventDefault();
+      }
+    });
+
+    input.addEventListener('input', function () {
+      if (this.value < 0) {
+        this.value = 0;
+      }
+    });
+  });
+
 function eliminarProducto(id) {
   Swal.fire({
     title: "¿Estás seguro?",

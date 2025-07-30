@@ -12,10 +12,6 @@
 </head>
 <body>
     <div class="login-container">
-        <div class="logo">
-            <!-- Imagen del logo-->
-            <img src="logo-cafe.png" alt="Café & Bebidas El Buen Sabor">
-        </div>
         
         <h1>Iniciar Sesión</h1>
         
