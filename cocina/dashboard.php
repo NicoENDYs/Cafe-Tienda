@@ -41,20 +41,12 @@ $stmt->execute();
             <div class="sidebar-header">
                 <h3><i class="fas fa-store"></i>Cocina:</h3>
             </div>
-        <!-- <ul class="sidebar-nav">    
-        <li class="nav-item">
-            <a href="../mesero/dashboard.php" class="nav-link" data-section="confirmar">
-                <i class="fas fa-cog"></i>
-                Confirmar
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="../mesero/entregar.php" class="nav-link" data-section="entregar">
-                <i class="fas fa-cog"></i>
-                Entregar
-            </a>
-        </li>
-    </ul> -->
+            <li class="nav-item">
+                    <a href="../controllers/LogOut.php" class="nav-link" data-section="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Cerrar sesión
+                    </a>
+                </li>
         </nav>  
 
     <div class="main-content">

@@ -1,4 +1,5 @@
 <?php
+
 require_once('../models/MySQL.php');
 
 session_start();
@@ -10,6 +11,8 @@ if ($_SESSION['rol'] != "admin") {
 
 $mysql = new MySQL();
 $mysql->conectar();
+
+
 //ingresos
 $consulta = "SELECT SUM(total) AS total FROM ventas;";
 $stmt = $mysql->prepare($consulta);
@@ -72,7 +75,7 @@ $consulta_employee_revenue = "
         u.rol AS role,
         COUNT(v.id_venta) AS sales,
         COALESCE(SUM(v.total), 0) AS revenue
-    FROM usuarios u
+    FROM Usuarios u
     LEFT JOIN ventas v ON u.id_usuario = v.id_usuario
     WHERE u.estado = 0
     GROUP BY u.id_usuario, u.nombre, u.rol
@@ -103,7 +106,7 @@ $consulta_waiter_tables = "
             THEN ROUND(COUNT(p.id_pedido) / COUNT(DISTINCT p.numero_mesa), 2)
             ELSE 0 
         END AS average
-    FROM usuarios u
+    FROM Usuarios u
     LEFT JOIN ventas v ON u.id_usuario = v.id_usuario
     LEFT JOIN pedidos p ON v.id_pedido = p.id_pedido
     WHERE u.rol IN ('mesero', 'admin') 
@@ -225,7 +228,7 @@ function obtenerBalanceGeneral($mysql, $startDate, $endDate) {
             AVG(v.total) as promedio_por_venta,
             MIN(v.total) as venta_minima,
             MAX(v.total) as venta_maxima
-        FROM usuarios u
+        FROM Usuarios u
         INNER JOIN ventas v ON u.id_usuario = v.id_usuario
         WHERE DATE(v.fecha_venta) BETWEEN :startDate AND :endDate
         AND u.estado = 0

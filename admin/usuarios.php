@@ -20,7 +20,7 @@ try {
             correo,
             rol,
             creado_en
-        FROM usuarios 
+        FROM Usuarios 
         WHERE estado = 0
     ");
     $stmt->execute();

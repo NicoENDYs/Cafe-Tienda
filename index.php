@@ -1,6 +1,14 @@
 <?php
 require_once 'models/MySQL.php';
 
+session_start();
+if (isset($_GET['mesa'])) {
+    $_SESSION['mesa'] = intval($_GET['mesa']); // Guardas en sesión
+    header("Location: https://cafeartesanal.proyectosadso.com/"); // Rediriges sin parámetros
+    exit();
+}
+// Luego en cualquier página puedes usar $_SESSION['mesa'
+
 $mysql = new MySQL();
 $mysql->conectar();
 $pdo = $mysql->getConexion();
@@ -92,7 +100,7 @@ $mysql->desconectar();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.all.min.js"></script>
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="./assets/css/index_estilo.css">
+    <link rel="stylesheet" href="/assets/css/index_estilo.css">
 
 </head>
 
@@ -424,7 +432,7 @@ $mysql->desconectar();
     </button>
 
     <!-- Scripts -->
-    <script src="./assets/js/index.js"></script>
+    <script src="/assets/js/index.js"></script>
     <script>
     // Objeto para almacenar las cantidades de cada producto
     const cantidades = {};
@@ -791,7 +799,7 @@ document.getElementById('confirmar-pedido').addEventListener('click', function()
         confirmButtonText: 'Sí, confirmar',
         cancelButtonText: 'Cancelar',
         preConfirm: () => {
-            const numeroMesa = <?php echo $_GET['mesa'] ?>;
+            const numeroMesa = <?php echo $_SESSION['mesa'] ?>;
             return numeroMesa ? parseInt(numeroMesa) : null;
         }
     }).then((result) => {
@@ -887,7 +895,8 @@ document.getElementById('confirmar-pedido').addEventListener('click', function()
         }
     }
 
-   function inicializarMapa() {
+    // Inicializar mapa
+    function inicializarMapa() {
     if (map) {
         // Ya existe el mapa, no hacer nada
         return;

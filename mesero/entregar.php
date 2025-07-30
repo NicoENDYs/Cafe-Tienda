@@ -54,6 +54,12 @@ $stmt->execute();
                 Entregar
             </a>
         </li>
+         <li class="nav-item">
+                    <a href="../controllers/LogOut.php" class="nav-link" data-section="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Cerrar sesión
+                    </a>
+                </li>
     </ul>
         </nav>
 
