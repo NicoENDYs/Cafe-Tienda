@@ -4,7 +4,7 @@
 // Clase para gestionar la conexión a la base de datos usando PDO
 class MySQL {
 
-    // Datos de conexión
+   // Datos de conexión
     private $ipServidor = "localhost";
     private $usuarioBase = "root";
     private $contrasena = "";
@@ -22,6 +22,26 @@ class MySQL {
             die("Error al conectar a la base de datos: " . $e->getMessage());
         }
     }
+       /* // Datos de conexión
+    private $ipServidor = "bnw0x7fkdfnqqysjavqc-mysql.services.clever-cloud.com";
+    private $usuarioBase = "ulbk99vv6pck3cry";
+    private $contrasena = "mT0ZkuDbIygKhNUTDj2x";
+    private $nombreBaseDatos = "bnw0x7fkdfnqqysjavqc";
+    private $puerto = 3306;
+
+    private $conexion; // Objeto PDO
+
+    // Método para conectar a la base de datos
+    public function conectar()
+    {
+        try {
+            $dsn = "mysql:host={$this->ipServidor};port={$this->puerto};dbname={$this->nombreBaseDatos};charset=utf8";
+            $this->conexion = new PDO($dsn, $this->usuarioBase, $this->contrasena);
+            $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("Error al conectar a la base de datos: " . $e->getMessage());
+        }
+    }*/
 
     // Método para desconectar
     public function desconectar() {

@@ -31,7 +31,7 @@ $stmt_detalle->execute([$id_pedido]);
 $detalles = $stmt_detalle->fetchAll(PDO::FETCH_ASSOC);
 
 // Obtener todos los productos disponibles para agregar
-$consulta_productos = "SELECT * FROM productos WHERE estado = 0";
+$consulta_productos = "SELECT * FROM productos WHERE estado = 0 AND stock > 0";
 $productos = $pdo->query($consulta_productos)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
