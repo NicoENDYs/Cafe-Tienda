@@ -6,7 +6,7 @@ $mysql = new MySQL();
 $mysql->conectar();
 
 // Consultar productos desde la base de datos
-$consulta = "SELECT id_producto, nombre, stock FROM productos";
+$consulta = "SELECT id_producto, nombre, stock FROM productos WHERE estado = 0";
 $stmt = $mysql->prepare($consulta);
 $stmt->execute();
 $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
